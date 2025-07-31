@@ -10,19 +10,17 @@ namespace ModTemplate
         // Called on server and client
         public override void Start(ICoreAPI api)
         {
-            Mod.Logger.Notification("Hello from template mod: " + Lang.Get("steampower:hello"));
+            api.Logger.Notification("STEAMPOWER: starting mod" + Lang.Get("steampower:hello"));
         }
 
         public override void StartServerSide(ICoreServerAPI api)
         {
-            Mod.Logger.Notification("Hello from template mod server side");
+            api.Logger.Notification("STEAMPOWER: server side has started");
         }
 
         public override void StartClientSide(ICoreClientAPI api)
         {
-            api.SendChatMessage("AAA");
-            api.ShowChatMessage("AAA");
-            Mod.Logger.Notification("Hello from template mod client side");
+            api.ShowChatMessage("STEAMPOWER: client side has started");
         }
     }
 }

@@ -20,6 +20,8 @@ namespace ModTemplate
 
         public override void StartClientSide(ICoreClientAPI api)
         {
+            api.SendChatMessage("AAA");
+            api.ShowChatMessage("AAA");
             Mod.Logger.Notification("Hello from template mod client side");
         }
     }

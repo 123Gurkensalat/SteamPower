@@ -1,3 +1,4 @@
+#!/bin/bash
 dotnet run --project ./CakeBuild/CakeBuild.csproj -- "$@"
 
 # copy .zip file to modfolder if set
@@ -23,4 +24,4 @@ fi
 
 cp "$ZIP_FILE" "$VINTAGE_STORY_MOD_FOLDER"
 
-echo "copied $ZIP_FILE"
+echo "copied $ZIP_FILE to $VINTAGE_STORY_MOD_FOLDER"

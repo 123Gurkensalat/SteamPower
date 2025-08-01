@@ -23,5 +23,6 @@
   "sounds": {
     "place": "game:block/stickplace",
     "walk": "game:walk/wood"
-  }
+  },
+  "class": "steampower.steampot"
 }

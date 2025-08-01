@@ -1,19 +1,20 @@
 {
   "code": "steampot",
   "creativeinventory": {
-    "general": [
-      "*"
-    ]
+    "general": ["*"]
   },
   "shape": {
     "base": "item/steampot"
   },
   "textures": {
-    "all": {
-      "base": "game:item/resource/plate/copper",
-      "ceramic-dark": "game:block/clay/ceramic-dark",
-      "copper": "game:item/resource/plate/copper",
-      "tinbronze": "game:item/resource/plate/tinbronze"
+    "ceramic-dark": {
+      "base": "game:block/clay/ceramic-dark"
+    },
+    "copper": {
+      "base": "game:item/resource/plate/copper"
+    },
+    "tinbronze": {
+      "base": "game:item/resource/plate/tinbronze"
     }
   },
   "blockmaterial": "Stone",

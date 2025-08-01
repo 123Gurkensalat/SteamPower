@@ -1,0 +1,26 @@
+{
+  "code": "steampot",
+  "creativeinventory": {
+    "general": [
+      "*"
+    ]
+  },
+  "shape": {
+    "base": "item/steampot"
+  },
+  "textures": {
+    "all": {
+      "base": "game:item/resource/plate/copper",
+      "ceramic-dark": "game:block/clay/ceramic-dark",
+      "copper": "game:item/resource/plate/copper",
+      "tinbronze": "game:item/resource/plate/tinbronze"
+    }
+  },
+  "blockmaterial": "Stone",
+  "drawtype": "json",
+  "resistance": 0.5,
+  "sounds": {
+    "place": "game:block/stickplace",
+    "walk": "game:walk/wood"
+  }
+}

@@ -1,7 +1,10 @@
 {
   "code": "steampot",
+  "entityclass": "steampower.steampot",
   "creativeinventory": {
-    "general": ["*"]
+    "general": [
+      "*"
+    ]
   },
   "shape": {
     "base": "item/steampot"

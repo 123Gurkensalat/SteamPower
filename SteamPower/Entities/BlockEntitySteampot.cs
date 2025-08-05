@@ -14,47 +14,18 @@ using Vintagestory.GameContent;
 
 namespace SteamPower
 {
-    internal class BlockSteampot : BlockEntity
+    internal class BlockSteampotEntity : BlockEntity
     {
 
         BlockEntityFirepit firepit = null;
         // constructor
         // public BlockSteampot() { }
-
-        public override void OnLoaded(ICoreAPI api)
+        //
+        public override void Initialize(ICoreAPI api)
         {
-            base.OnLoaded(api);
-
-
-            //Log a message to the server console
-            api.Logger.Notification("Steam Pot Block Loaded!");
-
-            //Perform any default logic when our block is placed.
-
-            //
-            // BlockPos newFirepitPos =
-            // // newFirepitPos.Y--;
-            // //
-            // BlockEntityFirepit nextFirepit = Block.GetBlockEntity<BlockEntityFirepit>(newFirepitPos);
-            // // // if (firepit != nextFirepit)
-            // // // {
-            // firepit = nextFirepit;
-            // api.World.RegisterGameTickListener(Update, 500);
-            // // }
+            base.Initialize(api);
+            api.Logger.Notification("STEAMPOWER: initialised BlockSteampotEntity");
         }
-
-
-        private void Update(float dTime)
-        {
-            Console.WriteLine("FIREPIT BE HERE");
-            if (firepit == null)
-                api.Logger.Notification("FIREPIT IS NULL");
-            // I think this is a logistic function
-            // if (firepit != null && firepit.furnaceTemperature > 800)
-            api.Logger.Chat("Current Temperature for steampot fire source: {0}", firepit.furnaceTemperature);
-
-        }
-
 
 
 

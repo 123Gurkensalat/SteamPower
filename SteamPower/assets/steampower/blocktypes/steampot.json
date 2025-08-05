@@ -1,5 +1,6 @@
 {
   "code": "steampot",
+  "class": "steampower.blocksteampot",
   "entityclass": "steampower.steampot",
   "creativeinventory": {
     "general": [
@@ -26,6 +27,5 @@
   "sounds": {
     "place": "game:block/stickplace",
     "walk": "game:walk/wood"
-  },
-  "class": "steampower.steampot"
+  }
 }

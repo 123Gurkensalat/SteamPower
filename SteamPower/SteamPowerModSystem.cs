@@ -4,7 +4,7 @@ using Vintagestory.API.Config;
 using Vintagestory.API.Server;
 using Vintagestory.API.MathTools;
 
-using SteamPower;
+
 
 namespace SteamPower
 {
@@ -14,7 +14,8 @@ namespace SteamPower
         public override void Start(ICoreAPI api)
         {
             api.Logger.Notification("STEAMPOWER: starting mod..." + Lang.Get("steampower:hello"));
-            api.RegisterBlockEntityClass(Mod.Info.ModID + ".steampot", typeof(BlockSteampot));
+            api.RegisterBlockClass(Mod.Info.ModID + ".blocksteampot", typeof(BlockSteampot));
+            api.RegisterBlockEntityClass(Mod.Info.ModID + ".steampot", typeof(BlockSteampotEntity));
             api.Logger.Notification("STEAMPOWER: mod has started" + Lang.Get("steampower:hello"));
         }
 

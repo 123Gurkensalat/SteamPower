@@ -17,15 +17,48 @@ namespace SteamPower
     internal class BlockSteampotEntity : BlockEntity
     {
 
-        BlockEntityFirepit firepit = null;
+
+
+        public BlockEntityFirepit firepit { get; set; } = null;
         // constructor
         // public BlockSteampot() { }
         //
         public override void Initialize(ICoreAPI api)
         {
+
             base.Initialize(api);
             api.Logger.Notification("STEAMPOWER: initialised BlockSteampotEntity");
+
+            BlockPos surveyedPos = Pos;
+
+            api.Logger.Notification("STEAMPOWER: Entity declared at: pos: [x:{0} y:{1}]", Pos.X, Pos.Y);
+
+
+            RegisterGameTickListener(findBelow, 2000);
+
+
+            // BlockEntity possibleFirepit = Block.GetBlockEntity<BlockEntityFirepit>(surveyedPos);
+            // firepit = (BlockEntityFirepit)possibleFirepit;
+
+
         }
+
+
+        public void findBelow(float dt)
+        {
+
+            Block fir = Api.World.BlockAccessor.GetBlock(Pos.DownCopy());
+
+
+            if (fir != null && fir is BlockFirepit)
+                Api.Logger.Notification("STEAMPOWER: Fireplace DOES Exists Below BlockSteampotEntity [{0}]. temp: {1}", this.Block.BlockId, 0);
+            else
+                Api.Logger.Notification("STEAMPOWER: Fireplace DOES NOT exist Below BlockSteampotEntity [{0}]", this.Block.BlockId);
+
+        }
+
+
+
 
 
 

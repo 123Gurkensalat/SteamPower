@@ -10,6 +10,7 @@ using Vintagestory.API.Server;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
+using System.Threading;
 
 
 
@@ -17,72 +18,59 @@ namespace SteamPower
 {
     internal class BlockSteampot : Block
     {
-
-        BlockEntityFirepit firepit = null;
         // constructor
         // public BlockSteampot() { }
         //
         public override void OnLoaded(ICoreAPI api)
         {
+            base.OnLoaded(api);
             api.Logger.Notification("STEAMPOWER: loaded BlockSteampot");
         }
 
 
-
-        // public override void OnLoaded(ICoreAPI api)
+        // public override void OnNeighbourBlockChange(IWorldAccessor world, BlockPos pos, BlockPos neibpos)
         // {
         //
-        //     //Log a message to the server console
-        //     api.Logger.Notification("Steam Pot Block Loaded!");
+        //     //INFO: if neibpos isn't exactly below, don't do anything
+        //     if (neibpos.Y + 1 != pos.Y)
+        //         return;
         //
-        //     //Perform any default logic when our block is placed.
+        //     api.Logger.Notification("STEAMPOWER: pos: [x:{0} y:{1}", pos.X, pos.Y);
+        //     api.Logger.Notification("STEAMPOWER: neightpos: [x:{0} y:{1}", neibpos.X, neibpos.Y);
         //
+        //     checkForEntity(pos);
         //
-        //     BlockEntityFirepit nextFirepit = GetBlockEntity<BlockEntityFirepit>(base. );
-        //     if (firepit != nextFirepit)
-        //     {
-        //         firepit = nextFirepit;
-        //         api.World.RegisterGameTickListener(Update, 500);
-        //     }
-        // }
-
-
-
-        // public override void OnUnloaded(ICoreAPI api) { }
-
-
-        // public override void OnNeighbourBlockChange(IWorldAccessor world, BlockPos pos, BlockPos neibPos)
-        // {
-        //     base.OnNeighbourBlockChange(world, pos, neibPos);
-        //     if (neibPos.Y >= pos.Y) return;
-        //     firepit = GetBlockEntity<BlockEntityFirepit>(neibPos);
+        //     BlockPos surveyedPos = pos;
+        //     surveyedPos.Y--;
+        //     //j
+        //     BlockEntity entityBelow = GetBlockEntity<BlockEntityFirepit>(surveyedPos);
         //
-        //     // if (firepit == null)
-        //     //     listenerId = api.World.RegisterGameTickListener(Update, 500);
-        //     // else
-        //     //     api.World.UnregisterGameTickListener(listenerId);
+        //     // //INFO: set to null in case if firepit is no longer below
+        //     // entity.firepit = (entityBelow != null) ? (BlockEntityFirepit)(entityBelow) : null;
+        //     // if (entity.firepit != null)
+        //     //     api.Logger.Notification("STEAMPOWER: detected firepit block change below steampot");
         // }
         //
-        // // BlockPlaceOnDrop
-        //
-        //
-        // public override void OnBlockPlaced(IWorldAccessor world, BlockPos blockPos, ItemStack byItemStack = null)
+        // // INFO: checks if entity of the block is null, if so tries to set it
+        // private void checkForEntity(BlockPos pos)
         // {
-        //     api.Logger.Chat("Steam Pot Block Placed!");
-        //     //Log a message to the console.
-        //     api.Logger.Notification("Steam Pot Block Placed!");
-        //
-        //     //Perform any default logic when our block is placed.
-        //     base.OnBlockPlaced(world, blockPos, byItemStack);
-        //     BlockPos belowBlockPos = blockPos;
-        //     blockPos.Y--;
-        //
-        //     BlockEntityFirepit nextFirepit = GetBlockEntity<BlockEntityFirepit>(blockPos);
-        //     if (firepit != nextFirepit)
+        //     // if (entity == null)
+        //     entity = GetBlockEntity<BlockSteampotEntity>(pos);
+        //     pos.Y--;
+        //     BlockSteampotEntity entitybelow = GetBlockEntity<BlockSteampotEntity>(pos);
+        //     // WARNING: if it still null, prints out Error message
+        //     if (entity == null)
         //     {
-        //         firepit = nextFirepit;
-        //         api.World.RegisterGameTickListener(Update, 500);
+        //         api.Logger.Warning("STEAMPOWER: FAILED TO FIND THE ENTITY FOR A GIVEN BLOCK pos:[x:{0} y:{1}]", pos.X, pos.Y);
+        //
+        //         if (entitybelow == null)
+        //             api.Logger.Warning("STEAMPOWER: FAILED TO FIND THE ENTITYBELOW FOR A GIVEN BLOCK pos:[x:{0} y:{1}]", pos.X, pos.Y);
+        //         else
+        //             api.Logger.Warning("STEAMPOWER: FOUND THE ENTITYBELOW FOR A GIVEN BLOCK pos:[x:{0} y:{1}]", pos.X, pos.Y);
         //     }
+        //     else
+        //         api.Logger.Warning("STEAMPOWER: FOUND THE ENTITY FOR A GIVEN BLOCK pos:[x:{0} y:{1}]", pos.X, pos.Y);
+        //
         // }
 
     }

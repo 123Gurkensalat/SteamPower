@@ -5,7 +5,6 @@ using Vintagestory.API.Server;
 using Vintagestory.API.MathTools;
 
 
-
 namespace SteamPower
 {
     public class ModTemplateModSystem : ModSystem
@@ -28,5 +27,6 @@ namespace SteamPower
         {
             api.ShowChatMessage("STEAMPOWER: client side has started");
         }
+
     }
 }

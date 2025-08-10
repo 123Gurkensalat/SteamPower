@@ -7,6 +7,9 @@
       "*"
     ]
   },
+  "attributes": {
+    "capacityLitres": 10
+  },
   "shape": {
     "base": "item/steampot"
   },

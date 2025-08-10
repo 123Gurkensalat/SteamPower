@@ -14,7 +14,7 @@ using Vintagestory.GameContent;
 
 namespace SteamPower
 {
-    internal class BlockSteampotEntity : BlockEntity
+    internal class BlockSteampotEntity : BlockEntityBarrel
     {
 
 

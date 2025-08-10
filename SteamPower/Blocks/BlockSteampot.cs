@@ -16,7 +16,7 @@ using System.Threading;
 
 namespace SteamPower
 {
-    internal class BlockSteampot : Block
+    internal class BlockSteampot : BlockBarrel
     {
         // constructor
         // public BlockSteampot() { }

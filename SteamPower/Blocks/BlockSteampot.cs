@@ -19,8 +19,22 @@ namespace SteamPower
     internal class BlockSteampot : BlockBarrel
     {
         // constructor
-        // public BlockSteampot() { }
-        //
+        public BlockSteampot()
+        {
+            emptyShape = AssetLocation.Create("block/wood/barrel/empty");
+            //emptyShape = AssetLocation.Create("item/steampot");
+
+            sealedShape = AssetLocation.Create("block/wood/barrel/closed");
+            contentsShape = AssetLocation.Create("block/wood/barrel/contents");
+            opaqueLiquidContentsShape = AssetLocation.Create("block/wood/barrel/opaqueliquidcontents");
+            liquidContentsShape = AssetLocation.Create("block/wood/barrel/liquidcontents");
+            //emptyShape = AssetLocation.Create("item/steampot");
+            //sealedShape  = AssetLocation.Create("item/steampot");
+            //contentsShape  = AssetLocation.Create("item/steampot");
+            //opaqueLiquidContentsShape  = AssetLocation.Create("block/wood/barrel/opaqueliquidcontents");
+            //liquidContentsShape  = AssetLocation.Create("block/wood/barrel/liquidcontents");
+        }
+
         public override void OnLoaded(ICoreAPI api)
         {
             base.OnLoaded(api);

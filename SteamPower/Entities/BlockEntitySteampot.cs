@@ -14,6 +14,8 @@ using Vintagestory.API.Datastructures;
 
 
 
+
+
 using Vintagestory.GameContent;
 
 
@@ -127,21 +129,21 @@ namespace SteamPower
         //}
 
 
-        //private void Inventory_SlotModified(int slotId)
-        //{
-            //if (!ignoreChange && (slotId == 0 || slotId == 1))
-            //{
-                //invDialog?.UpdateContents();
-                //ICoreAPI api = Api;
-                //if (api != null && api.Side == EnumAppSide.Client)
-                //{
-                    ////currentMesh = GenMesh();
-                //}
+        private void Inventory_SlotModified(int slotId)
+        {
+            if (!ignoreChange && (slotId == 0 || slotId == 1))
+            {
+                invDialog?.UpdateContents();
+                ICoreAPI api = Api;
+                if (api != null && api.Side == EnumAppSide.Client)
+                {
+                    //currentMesh = GenMesh();
+                }
 
-                ////MarkDirty(redrawOnClient: true);
-                //FindMatchingRecipe();
-            //}
-        //}
+                //MarkDirty(redrawOnClient: true);
+            //    FindMatchingRecipe();
+            }
+        }
 
         //private void FindMatchingRecipe()
         //{
@@ -226,16 +228,16 @@ namespace SteamPower
             //}
         //}
 
-        //public override void OnBlockBroken(IPlayer byPlayer = null)
-        //{
-            //if (!Sealed)
-            //{
-                //base.OnBlockBroken(byPlayer);
-            //}
+        public override void OnBlockBroken(IPlayer byPlayer = null)
+        {
+            if (!Sealed)
+            {
+                base.OnBlockBroken(byPlayer);
+            }
 
-            //invDialog?.TryClose();
-            //invDialog = null;
-        //}
+            invDialog?.TryClose();
+            invDialog = null;
+        }
 
         //public void SealBarrel()
         //{
@@ -259,29 +261,29 @@ namespace SteamPower
             //}
         //}
 
-        //protected void toggleInventoryDialogClient(IPlayer byPlayer)
-        //{
-            //if (invDialog == null)
-            //{
-                //ICoreClientAPI capi = Api as ICoreClientAPI;
-                //invDialog = new GuiDialogBarrel(Lang.Get("Barrel"), Inventory, Pos, Api as ICoreClientAPI);
-                //invDialog.OnClosed += delegate
-                //{
-                    //invDialog = null;
-                    //capi.Network.SendBlockEntityPacket(Pos, 1001);
-                    //capi.Network.SendPacketClient(Inventory.Close(byPlayer));
-                //};
-                //invDialog.OpenSound = AssetLocation.Create("sounds/block/barrelopen", base.Block.Code.Domain);
-                //invDialog.CloseSound = AssetLocation.Create("sounds/block/barrelclose", base.Block.Code.Domain);
-                //invDialog.TryOpen();
-                //capi.Network.SendPacketClient(Inventory.Open(byPlayer));
-                //capi.Network.SendBlockEntityPacket(Pos, 1000);
-            //}
-            //else
-            //{
-                //invDialog.TryClose();
-            //}
-        //}
+        protected void toggleInventoryDialogClient(IPlayer byPlayer)
+        {
+            if (invDialog == null)
+            {
+                ICoreClientAPI capi = Api as ICoreClientAPI;
+                invDialog = new GuiDialogBarrel(Lang.Get("Barrel"), Inventory, Pos, Api as ICoreClientAPI);
+                invDialog.OnClosed += delegate
+                {
+                    invDialog = null;
+                    capi.Network.SendBlockEntityPacket(Pos, 1001);
+                    capi.Network.SendPacketClient(Inventory.Close(byPlayer));
+                };
+                invDialog.OpenSound = AssetLocation.Create("sounds/block/barrelopen", base.Block.Code.Domain);
+                invDialog.CloseSound = AssetLocation.Create("sounds/block/barrelclose", base.Block.Code.Domain);
+                invDialog.TryOpen();
+                capi.Network.SendPacketClient(Inventory.Open(byPlayer));
+                capi.Network.SendBlockEntityPacket(Pos, 1000);
+            }
+            else
+            {
+                invDialog.TryClose();
+            }
+        }
 
         //public override void OnReceivedClientPacket(IPlayer player, int packetid, byte[] data)
         //{
@@ -309,36 +311,36 @@ namespace SteamPower
             //}
         //}
 
-        //public override void OnReceivedServerPacket(int packetid, byte[] data)
-        //{
-            //base.OnReceivedServerPacket(packetid, data);
-            //if (packetid == 1001)
-            //{
-                //(Api.World as IClientWorldAccessor).Player.InventoryManager.CloseInventory(Inventory);
-                //invDialog?.TryClose();
-                //invDialog?.Dispose();
-                //invDialog = null;
-            //}
-        //}
+        public override void OnReceivedServerPacket(int packetid, byte[] data)
+        {
+            base.OnReceivedServerPacket(packetid, data);
+            if (packetid == 1001)
+            {
+                (Api.World as IClientWorldAccessor).Player.InventoryManager.CloseInventory(Inventory);
+                invDialog?.TryClose();
+                invDialog?.Dispose();
+                invDialog = null;
+            }
+        }
 
-        //public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldForResolving)
-        //{
-            //base.FromTreeAttributes(tree, worldForResolving);
-            //Sealed = tree.GetBool("sealed");
-            //ICoreAPI api = Api;
-            //if (api != null && api.Side == EnumAppSide.Client)
-            //{
-                ////currentMesh = GenMesh();
-                ////MarkDirty(redrawOnClient: true);
-                //invDialog?.UpdateContents();
-            //}
+        public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldForResolving)
+        {
+            base.FromTreeAttributes(tree, worldForResolving);
+            Sealed = tree.GetBool("sealed");
+            ICoreAPI api = Api;
+            if (api != null && api.Side == EnumAppSide.Client)
+            {
+                //currentMesh = GenMesh();
+                //MarkDirty(redrawOnClient: true);
+                invDialog?.UpdateContents();
+            }
 
-            //SealedSinceTotalHours = tree.GetDouble("sealedSinceTotalHours");
-            //if (Api != null)
-            //{
+            SealedSinceTotalHours = tree.GetDouble("sealedSinceTotalHours");
+            if (Api != null)
+            {
                 //FindMatchingRecipe();
-            //}
-        //}
+            }
+        }
 
         //public override void ToTreeAttributes(ITreeAttribute tree)
         //{
@@ -367,11 +369,11 @@ namespace SteamPower
             //return meshData;
         //}
 
-        //public override void OnBlockUnloaded()
-        //{
-            //base.OnBlockUnloaded();
-            //invDialog?.Dispose();
-        //}
+        public override void OnBlockUnloaded()
+        {
+            base.OnBlockUnloaded();
+            invDialog?.Dispose();
+        }
 
         //public override bool OnTesselation(ITerrainMeshPool mesher, ITesselatorAPI tesselator)
         //{

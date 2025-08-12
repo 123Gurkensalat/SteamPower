@@ -12,15 +12,14 @@ using Vintagestory.API.Util;
 
 using Vintagestory.GameContent;
 
-namespace SteamPower{
+namespace SteamPower {
 
 
-internal class BlockSteampot : BlockLiquidContainerBase
-{
+    internal class BlockSteampot : BlockLiquidContainerBase
+    {
     public override bool AllowHeldLiquidTransfer => false;
 
-    //public AssetLocation emptyShape { get; protected set; } = AssetLocation.Create("block/wood/barrel/empty");
-    public AssetLocation emptyShape { get; protected set; } = AssetLocation.Create("item/wood/barrel/empty");
+    public AssetLocation emptyShape { get; protected set; } = AssetLocation.Create("block/wood/barrel/empty");
 
     public AssetLocation sealedShape { get; protected set; } = AssetLocation.Create("block/wood/barrel/closed");
 
@@ -40,24 +39,24 @@ internal class BlockSteampot : BlockLiquidContainerBase
         return 1;
     }
 
-    //public override void OnBeforeRender(ICoreClientAPI capi, ItemStack itemstack, EnumItemRenderTarget target, ref ItemRenderInfo renderinfo)
-    //{
-        //object value;
-        //Dictionary<string, MultiTextureMeshRef> dictionary = (Dictionary<string, MultiTextureMeshRef>)(capi.ObjectCache.TryGetValue("barrelMeshRefs" + Code, out value) ? (value as Dictionary<string, MultiTextureMeshRef>) : (capi.ObjectCache["barrelMeshRefs" + Code] = new Dictionary<string, MultiTextureMeshRef>()));
-        //ItemStack[] contents = GetContents(capi.World, itemstack);
-        //if (contents != null && contents.Length != 0)
-        //{
-            //bool issealed = itemstack.Attributes.GetBool("sealed");
-            //string barrelMeshkey = GetBarrelMeshkey(contents[0], (contents.Length > 1) ? contents[1] : null);
-            //if (!dictionary.TryGetValue(barrelMeshkey, out var value2))
-            //{
-                //MeshData data = GenMesh(contents[0], (contents.Length > 1) ? contents[1] : null, issealed);
-                //value2 = (dictionary[barrelMeshkey] = capi.Render.UploadMultiTextureMesh(data));
-            //}
+    public override void OnBeforeRender(ICoreClientAPI capi, ItemStack itemstack, EnumItemRenderTarget target, ref ItemRenderInfo renderinfo)
+    {
+        object value;
+        Dictionary<string, MultiTextureMeshRef> dictionary = (Dictionary<string, MultiTextureMeshRef>)(capi.ObjectCache.TryGetValue("barrelMeshRefs" + Code, out value) ? (value as Dictionary<string, MultiTextureMeshRef>) : (capi.ObjectCache["barrelMeshRefs" + Code] = new Dictionary<string, MultiTextureMeshRef>()));
+        ItemStack[] contents = GetContents(capi.World, itemstack);
+        if (contents != null && contents.Length != 0)
+        {
+            bool issealed = itemstack.Attributes.GetBool("sealed");
+            string barrelMeshkey = GetBarrelMeshkey(contents[0], (contents.Length > 1) ? contents[1] : null);
+            if (!dictionary.TryGetValue(barrelMeshkey, out var value2))
+            {
+                MeshData data = GenMesh(contents[0], (contents.Length > 1) ? contents[1] : null, issealed);
+                value2 = (dictionary[barrelMeshkey] = capi.Render.UploadMultiTextureMesh(data));
+            }
 
-            //renderinfo.ModelRef = value2;
-        //}
-    //}
+            renderinfo.ModelRef = value2;
+        }
+    }
 
     public string GetBarrelMeshkey(ItemStack contentStack, ItemStack liquidStack)
     {
@@ -139,32 +138,32 @@ internal class BlockSteampot : BlockLiquidContainerBase
         return base.TryPutLiquid(containerStack, liquidStack, desiredLitres);
     }
 
-    //public MeshData GenMesh(ItemStack contentStack, ItemStack liquidContentStack, bool issealed, BlockPos forBlockPos = null)
-    //{
-        //ICoreClientAPI obj = api as ICoreClientAPI;
-        //Shape shape = Vintagestory.API.Common.Shape.TryGet(obj, issealed ? sealedShape : emptyShape);
-        //obj.Tesselator.TesselateShape(this, shape, out var modeldata);
-        //if (!issealed)
-        //{
-            //JsonObject containerProps = liquidContentStack?.ItemAttributes?["waterTightContainerProps"];
-            //MeshData meshData = getContentMeshFromAttributes(contentStack, liquidContentStack, forBlockPos) ?? getContentMeshLiquids(contentStack, liquidContentStack, forBlockPos, containerProps) ?? getContentMesh(contentStack, forBlockPos, contentsShape);
-            //if (meshData != null)
-            //{
-                //modeldata.AddMeshData(meshData);
-            //}
+    public MeshData GenMesh(ItemStack contentStack, ItemStack liquidContentStack, bool issealed, BlockPos forBlockPos = null)
+    {
+        ICoreClientAPI obj = api as ICoreClientAPI;
+        Shape shape = Vintagestory.API.Common.Shape.TryGet(obj, issealed ? sealedShape : emptyShape);
+        obj.Tesselator.TesselateShape(this, shape, out var modeldata);
+        if (!issealed)
+        {
+            JsonObject containerProps = liquidContentStack?.ItemAttributes?["waterTightContainerProps"];
+            MeshData meshData = getContentMeshFromAttributes(contentStack, liquidContentStack, forBlockPos) ?? getContentMeshLiquids(contentStack, liquidContentStack, forBlockPos, containerProps) ?? getContentMesh(contentStack, forBlockPos, contentsShape);
+            if (meshData != null)
+            {
+                modeldata.AddMeshData(meshData);
+            }
 
-            //if (forBlockPos != null)
-            //{
-                //modeldata.CustomInts = new CustomMeshDataPartInt(modeldata.FlagsCount);
-                //modeldata.CustomInts.Values.Fill(67108864);
-                //modeldata.CustomInts.Count = modeldata.FlagsCount;
-                //modeldata.CustomFloats = new CustomMeshDataPartFloat(modeldata.FlagsCount * 2);
-                //modeldata.CustomFloats.Count = modeldata.FlagsCount * 2;
-            //}
-        //}
+            if (forBlockPos != null)
+            {
+                modeldata.CustomInts = new CustomMeshDataPartInt(modeldata.FlagsCount);
+                modeldata.CustomInts.Values.Fill(67108864);
+                modeldata.CustomInts.Count = modeldata.FlagsCount;
+                modeldata.CustomFloats = new CustomMeshDataPartFloat(modeldata.FlagsCount * 2);
+                modeldata.CustomFloats.Count = modeldata.FlagsCount * 2;
+            }
+        }
 
-        //return modeldata;
-    //}
+        return modeldata;
+    }
 
     private MeshData getContentMeshLiquids(ItemStack contentStack, ItemStack liquidContentStack, BlockPos forBlockPos, JsonObject containerProps)
     {
@@ -307,70 +306,70 @@ internal class BlockSteampot : BlockLiquidContainerBase
     public override void OnLoaded(ICoreAPI api)
     {
         base.OnLoaded(api);
-        //if (Attributes != null)
-        //{
-            //capacityLitresFromAttributes = Attributes["capacityLitres"].AsInt(50);
-            //emptyShape = AssetLocation.Create(Attributes["emptyShape"].AsString(emptyShape), Code.Domain);
-            //sealedShape = AssetLocation.Create(Attributes["sealedShape"].AsString(sealedShape), Code.Domain);
-            //contentsShape = AssetLocation.Create(Attributes["contentsShape"].AsString(contentsShape), Code.Domain);
-            //opaqueLiquidContentsShape = AssetLocation.Create(Attributes["opaqueLiquidContentsShape"].AsString(opaqueLiquidContentsShape), Code.Domain);
-            //liquidContentsShape = AssetLocation.Create(Attributes["liquidContentsShape"].AsString(liquidContentsShape), Code.Domain);
-        //}
+        if (Attributes != null)
+        {
+            capacityLitresFromAttributes = Attributes["capacityLitres"].AsInt(50);
+            emptyShape = AssetLocation.Create(Attributes["emptyShape"].AsString(emptyShape), Code.Domain);
+            sealedShape = AssetLocation.Create(Attributes["sealedShape"].AsString(sealedShape), Code.Domain);
+            contentsShape = AssetLocation.Create(Attributes["contentsShape"].AsString(contentsShape), Code.Domain);
+            opaqueLiquidContentsShape = AssetLocation.Create(Attributes["opaqueLiquidContentsShape"].AsString(opaqueLiquidContentsShape), Code.Domain);
+            liquidContentsShape = AssetLocation.Create(Attributes["liquidContentsShape"].AsString(liquidContentsShape), Code.Domain);
+        }
 
-        //emptyShape.WithPathPrefixOnce("shapes/").WithPathAppendixOnce(".json");
-        //sealedShape.WithPathPrefixOnce("shapes/").WithPathAppendixOnce(".json");
-        //contentsShape.WithPathPrefixOnce("shapes/").WithPathAppendixOnce(".json");
-        //opaqueLiquidContentsShape.WithPathPrefixOnce("shapes/").WithPathAppendixOnce(".json");
-        //liquidContentsShape.WithPathPrefixOnce("shapes/").WithPathAppendixOnce(".json");
-        //if (api.Side != EnumAppSide.Client)
-        //{
-            //return;
-        //}
+        emptyShape.WithPathPrefixOnce("shapes/").WithPathAppendixOnce(".json");
+        sealedShape.WithPathPrefixOnce("shapes/").WithPathAppendixOnce(".json");
+        contentsShape.WithPathPrefixOnce("shapes/").WithPathAppendixOnce(".json");
+        opaqueLiquidContentsShape.WithPathPrefixOnce("shapes/").WithPathAppendixOnce(".json");
+        liquidContentsShape.WithPathPrefixOnce("shapes/").WithPathAppendixOnce(".json");
+        if (api.Side != EnumAppSide.Client)
+        {
+            return;
+        }
 
-        //ICoreClientAPI capi = api as ICoreClientAPI;
-        //interactions = ObjectCacheUtil.GetOrCreate(api, "liquidContainerBase", delegate
-        //{
-            //List<ItemStack> list = new List<ItemStack>();
-            //foreach (CollectibleObject collectible in api.World.Collectibles)
-            //{
-                //if (collectible is ILiquidSource || collectible is ILiquidSink || collectible is BlockWateringCan)
-                //{
-                    //List<ItemStack> handBookStacks = collectible.GetHandBookStacks(capi);
-                    //if (handBookStacks != null)
-                    //{
-                        //list.AddRange(handBookStacks);
-                    //}
-                //}
-            //}
+        ICoreClientAPI capi = api as ICoreClientAPI;
+        interactions = ObjectCacheUtil.GetOrCreate(api, "liquidContainerBase", delegate
+        {
+            List<ItemStack> list = new List<ItemStack>();
+            foreach (CollectibleObject collectible in api.World.Collectibles)
+            {
+                if (collectible is ILiquidSource || collectible is ILiquidSink || collectible is BlockWateringCan)
+                {
+                    List<ItemStack> handBookStacks = collectible.GetHandBookStacks(capi);
+                    if (handBookStacks != null)
+                    {
+                        list.AddRange(handBookStacks);
+                    }
+                }
+            }
 
-            //ItemStack[] lstacks = list.ToArray();
-            //ItemStack[] linenStack = new ItemStack[1]
-            //{
-                //new ItemStack(api.World.GetBlock(new AssetLocation("linen-normal-down")))
-            //};
-            //return new WorldInteraction[2]
-            //{
-                //new WorldInteraction
-                //{
-                    //ActionLangCode = "blockhelp-bucket-rightclick",
-                    //MouseButton = EnumMouseButton.Right,
-                    //Itemstacks = lstacks,
-                    //GetMatchingStacks = delegate(WorldInteraction wi, BlockSelection bs, EntitySelection ws)
-                    //{
-                        //BlockEntityBarrel obj = api.World.BlockAccessor.GetBlockEntity(bs.Position) as BlockEntityBarrel;
-                        //return (obj == null || obj.Sealed) ? null : lstacks;
-                    //}
-                //},
-                //new WorldInteraction
-                //{
-                    //ActionLangCode = "blockhelp-barrel-takecottagecheese",
-                    //MouseButton = EnumMouseButton.Right,
-                    //HotKeyCode = "shift",
-                    //Itemstacks = linenStack,
-                    //GetMatchingStacks = (WorldInteraction wi, BlockSelection bs, EntitySelection ws) => ((api.World.BlockAccessor.GetBlockEntity(bs.Position) as BlockEntityBarrel)?.Inventory[1].Itemstack?.Item?.Code?.Path == "cottagecheeseportion") ? linenStack : null
-                //}
-            //};
-        //});
+            ItemStack[] lstacks = list.ToArray();
+            ItemStack[] linenStack = new ItemStack[1]
+            {
+                new ItemStack(api.World.GetBlock(new AssetLocation("linen-normal-down")))
+            };
+            return new WorldInteraction[2]
+            {
+                new WorldInteraction
+                {
+                    ActionLangCode = "blockhelp-bucket-rightclick",
+                    MouseButton = EnumMouseButton.Right,
+                    Itemstacks = lstacks,
+                    GetMatchingStacks = delegate(WorldInteraction wi, BlockSelection bs, EntitySelection ws)
+                    {
+                        BlockEntityBarrel obj = api.World.BlockAccessor.GetBlockEntity(bs.Position) as BlockEntityBarrel;
+                        return (obj == null || obj.Sealed) ? null : lstacks;
+                    }
+                },
+                new WorldInteraction
+                {
+                    ActionLangCode = "blockhelp-barrel-takecottagecheese",
+                    MouseButton = EnumMouseButton.Right,
+                    HotKeyCode = "shift",
+                    Itemstacks = linenStack,
+                    GetMatchingStacks = (WorldInteraction wi, BlockSelection bs, EntitySelection ws) => ((api.World.BlockAccessor.GetBlockEntity(bs.Position) as BlockEntityBarrel)?.Inventory[1].Itemstack?.Item?.Code?.Path == "cottagecheeseportion") ? linenStack : null
+                }
+            };
+        });
     }
 
     public override WorldInteraction[] GetPlacedBlockInteractionHelp(IWorldAccessor world, BlockSelection blockSel, IPlayer forPlayer)
@@ -482,7 +481,6 @@ internal class BlockSteampot : BlockLiquidContainerBase
     public override void TryFillFromBlock(EntityItem byEntityItem, BlockPos pos)
     {
     }
-}
 
-
+    }
 }

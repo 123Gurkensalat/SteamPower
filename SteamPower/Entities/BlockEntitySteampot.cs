@@ -14,9 +14,8 @@ using Vintagestory.GameContent;
 
 namespace SteamPower
 {
-    internal class BlockSteampotEntity : BlockEntityBarrel
+    internal class BlockSteampotEntity : BlockEntity
     {
-
 
 
         public BlockEntityFirepit firepit { get; set; } = null;
@@ -27,6 +26,8 @@ namespace SteamPower
         {
 
             base.Initialize(api);
+
+            //inventory.OnGetAutoPushIntoSlot = GetAutoPushIntoSlot;
             api.Logger.Notification("STEAMPOWER: initialised BlockSteampotEntity");
 
             BlockPos surveyedPos = Pos;

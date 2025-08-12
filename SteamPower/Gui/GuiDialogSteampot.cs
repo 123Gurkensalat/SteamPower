@@ -98,7 +98,7 @@ namespace SteamPower
                     text = text + "\n" + Lang.Get("barrelcontents-items", itemstack2.StackSize, itemstack2.GetName());
                 }
 
-                BlockEntityBarrel blockEntityBarrel = capi.World.BlockAccessor.GetBlockEntity(base.BlockEntityPosition) as BlockEntityBarrel;
+                BlockSteampotEntity blockEntityBarrel = capi.World.BlockAccessor.GetBlockEntity(base.BlockEntityPosition) as BlockSteampotEntity;
                 if (blockEntityBarrel.CurrentRecipe != null)
                 {
                     ItemStack resolvedItemstack = blockEntityBarrel.CurrentRecipe.Output.ResolvedItemstack;
@@ -131,7 +131,7 @@ namespace SteamPower
             ItemSlot itemSlot = base.Inventory[1];
             if (!itemSlot.Empty)
             {
-                BlockEntityBarrel obj = capi.World.BlockAccessor.GetBlockEntity(base.BlockEntityPosition) as BlockEntityBarrel;
+                BlockSteampotEntity obj = capi.World.BlockAccessor.GetBlockEntity(base.BlockEntityPosition) as BlockSteampotEntity;
                 float num = 1f;
                 int num2 = obj.CapacityLitres;
                 WaterTightContainableProps containableProps = BlockLiquidContainerBase.GetContainableProps(itemSlot.Itemstack);
@@ -160,7 +160,7 @@ namespace SteamPower
 
         private bool onSealClick()
         {
-            if (!(capi.World.BlockAccessor.GetBlockEntity(base.BlockEntityPosition) is BlockEntityBarrel { Sealed: false } blockEntityBarrel))
+            if (!(capi.World.BlockAccessor.GetBlockEntity(base.BlockEntityPosition) is BlockSteampotEntity { Sealed: false } blockEntityBarrel))
             {
                 return true;
             }
@@ -170,7 +170,7 @@ namespace SteamPower
                 return true;
             }
 
-            blockEntityBarrel.SealBarrel();
+            //blockEntityBarrel.SealBarrel();
             capi.Network.SendBlockEntityPacket(base.BlockEntityPosition, 1337);
             capi.World.PlaySoundAt(new AssetLocation("sounds/player/seal"), base.BlockEntityPosition, 0.4);
             TryClose();

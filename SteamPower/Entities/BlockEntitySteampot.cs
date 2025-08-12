@@ -25,7 +25,7 @@ namespace SteamPower
     internal class BlockSteampotEntity : BlockEntityLiquidContainer
     //internal class BlockSteampotEntity : BlockEntityLiquidContainer
     {
-        private GuiDialogBarrel invDialog;
+        private GuiDialogSteampot invDialog;
 
         //private MeshData currentMesh;
 
@@ -266,7 +266,7 @@ namespace SteamPower
             if (invDialog == null)
             {
                 ICoreClientAPI capi = Api as ICoreClientAPI;
-                invDialog = new GuiDialogBarrel(Lang.Get("Barrel"), Inventory, Pos, Api as ICoreClientAPI);
+                invDialog = new GuiDialogSteampot(Lang.Get("Barrel"), Inventory, Pos, Api as ICoreClientAPI);
                 invDialog.OnClosed += delegate
                 {
                     invDialog = null;

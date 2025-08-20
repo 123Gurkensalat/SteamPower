@@ -23,7 +23,7 @@ using Vintagestory.GameContent;
 namespace SteamPower
 {
     internal class BlockSteampotEntity : BlockEntityLiquidContainer
-    //internal class BlockSteampotEntity : BlockEntityLiquidContainer
+    //internal class BlockSteampotEntity : BlockEntityBarrel
     {
         private GuiDialogSteampot invDialog;
 
@@ -49,7 +49,7 @@ namespace SteamPower
         {
             get
             {
-//                FindMatchingRecipe();
+                //                FindMatchingRecipe();
                 if (CurrentRecipe != null && CurrentRecipe.SealHours > 0.0)
                 {
                     return true;
@@ -61,6 +61,7 @@ namespace SteamPower
 
         public BlockSteampotEntity()
         {
+
             inventory = new InventoryGeneric(2, null, null, (int id, InventoryGeneric self) => (id == 0) ? ((ItemSlot)new ItemSlotBarrelInput(self)) : ((ItemSlot)new ItemSlotLiquidOnly(self, 50f)));
             inventory.BaseWeight = 1f;
             //inventory.OnGetSuitability = GetSuitability;
@@ -82,6 +83,7 @@ namespace SteamPower
             //if (api.Side == EnumAppSide.Client && currentMesh == null)
             if (api.Side == EnumAppSide.Client)
             {
+
                 //currentMesh = GenMesh();
                 //MarkDirty(redrawOnClient: true);
             }
@@ -95,37 +97,37 @@ namespace SteamPower
         }
         //private float Inventory_OnAcquireTransitionSpeed1(EnumTransitionType transType, ItemStack stack, float mul)
         //{
-            //if (Sealed && CurrentRecipe != null && CurrentRecipe.SealHours > 0.0)
-            //{
-                //return 0f;
-            //}
+        //if (Sealed && CurrentRecipe != null && CurrentRecipe.SealHours > 0.0)
+        //{
+        //return 0f;
+        //}
 
-            //return mul;
+        //return mul;
         //}
 
         //private float GetSuitability(ItemSlot sourceSlot, ItemSlot targetSlot, bool isMerge)
         //{
-            //if (targetSlot == inventory[1] && inventory[0].StackSize > 0)
-            //{
-                //ItemStack itemstack = inventory[0].Itemstack;
-                //ItemStack itemstack2 = sourceSlot.Itemstack;
-                //if (itemstack.Collectible.Equals(itemstack, itemstack2, GlobalConstants.IgnoredStackAttributes))
-                //{
-                    //return -1f;
-                //}
-            //}
+        //if (targetSlot == inventory[1] && inventory[0].StackSize > 0)
+        //{
+        //ItemStack itemstack = inventory[0].Itemstack;
+        //ItemStack itemstack2 = sourceSlot.Itemstack;
+        //if (itemstack.Collectible.Equals(itemstack, itemstack2, GlobalConstants.IgnoredStackAttributes))
+        //{
+        //return -1f;
+        //}
+        //}
 
-            //return (isMerge ? (inventory.BaseWeight + 3f) : (inventory.BaseWeight + 1f)) + (float)((sourceSlot.Inventory is InventoryBasePlayer) ? 1 : 0);
+        //return (isMerge ? (inventory.BaseWeight + 3f) : (inventory.BaseWeight + 1f)) + (float)((sourceSlot.Inventory is InventoryBasePlayer) ? 1 : 0);
         //}
 
         //protected override ItemSlot GetAutoPushIntoSlot(BlockFacing atBlockFace, ItemSlot fromSlot)
         //{
-            //if (atBlockFace == BlockFacing.UP)
-            //{
-                //return inventory[0];
-            //}
+        //if (atBlockFace == BlockFacing.UP)
+        //{
+        //return inventory[0];
+        //}
 
-            //return null;
+        //return null;
         //}
 
 
@@ -141,91 +143,91 @@ namespace SteamPower
                 }
 
                 //MarkDirty(redrawOnClient: true);
-            //    FindMatchingRecipe();
+                //    FindMatchingRecipe();
             }
         }
 
         //private void FindMatchingRecipe()
         //{
-            //ItemSlot[] array = new ItemSlot[2]
-            //{
-            //inventory[0],
-            //inventory[1]
-            //};
-            //CurrentRecipe = null;
-            //foreach (BarrelRecipe barrelRecipe in Api.GetBarrelRecipes())
-            //{
-                //if (!barrelRecipe.Matches(array, out var outputStackSize))
-                //{
-                    //continue;
-                //}
+        //ItemSlot[] array = new ItemSlot[2]
+        //{
+        //inventory[0],
+        //inventory[1]
+        //};
+        //CurrentRecipe = null;
+        //foreach (BarrelRecipe barrelRecipe in Api.GetBarrelRecipes())
+        //{
+        //if (!barrelRecipe.Matches(array, out var outputStackSize))
+        //{
+        //continue;
+        //}
 
-                //ignoreChange = true;
-                //if (barrelRecipe.SealHours > 0.0)
-                //{
-                    //CurrentRecipe = barrelRecipe;
-                    //CurrentOutSize = outputStackSize;
-                //}
-                //else
-                //{
-                    //ICoreAPI api = Api;
-                    //if (api != null && api.Side == EnumAppSide.Server)
-                    //{
-                        //barrelRecipe.TryCraftNow(Api, 0.0, array);
-                        ////MarkDirty(redrawOnClient: true);
-                        ////Api.World.BlockAccessor.MarkBlockEntityDirty(Pos);
-                    //}
-                //}
+        //ignoreChange = true;
+        //if (barrelRecipe.SealHours > 0.0)
+        //{
+        //CurrentRecipe = barrelRecipe;
+        //CurrentOutSize = outputStackSize;
+        //}
+        //else
+        //{
+        //ICoreAPI api = Api;
+        //if (api != null && api.Side == EnumAppSide.Server)
+        //{
+        //barrelRecipe.TryCraftNow(Api, 0.0, array);
+        ////MarkDirty(redrawOnClient: true);
+        ////Api.World.BlockAccessor.MarkBlockEntityDirty(Pos);
+        //}
+        //}
 
-                //invDialog?.UpdateContents();
-                //ICoreAPI api2 = Api;
-                //if (api2 != null && api2.Side == EnumAppSide.Client)
-                //{
-                    ////currentMesh = GenMesh();
-                    ////MarkDirty(redrawOnClient: true);
-                //}
+        //invDialog?.UpdateContents();
+        //ICoreAPI api2 = Api;
+        //if (api2 != null && api2.Side == EnumAppSide.Client)
+        //{
+        ////currentMesh = GenMesh();
+        ////MarkDirty(redrawOnClient: true);
+        //}
 
-                //ignoreChange = false;
-                //break;
-            //}
+        //ignoreChange = false;
+        //break;
+        //}
         //}
 
         //private void OnEvery3Second(float dt)
         //{
-            //if (!inventory[0].Empty && CurrentRecipe == null)
-            //{
-                //FindMatchingRecipe();
-            //}
+        //if (!inventory[0].Empty && CurrentRecipe == null)
+        //{
+        //FindMatchingRecipe();
+        //}
 
-            //if (CurrentRecipe != null)
-            //{
-                //if (Sealed && CurrentRecipe.TryCraftNow(Api, Api.World.Calendar.TotalHours - SealedSinceTotalHours, new ItemSlot[2]
-                //{
-                //inventory[0],
-                //inventory[1]
-                //}))
-                //{
-                    ////MarkDirty(redrawOnClient: true);
-                ////    Api.World.BlockAccessor.MarkBlockEntityDirty(Pos);
-                    //Sealed = false;
-                //}
-            //}
-            //else if (Sealed)
-            //{
-                //Sealed = false;
-                ////MarkDirty(redrawOnClient: true);
-            //}
+        //if (CurrentRecipe != null)
+        //{
+        //if (Sealed && CurrentRecipe.TryCraftNow(Api, Api.World.Calendar.TotalHours - SealedSinceTotalHours, new ItemSlot[2]
+        //{
+        //inventory[0],
+        //inventory[1]
+        //}))
+        //{
+        ////MarkDirty(redrawOnClient: true);
+        ////    Api.World.BlockAccessor.MarkBlockEntityDirty(Pos);
+        //Sealed = false;
+        //}
+        //}
+        //else if (Sealed)
+        //{
+        //Sealed = false;
+        ////MarkDirty(redrawOnClient: true);
+        //}
         //}
 
         //public override void OnBlockPlaced(ItemStack byItemStack = null)
         //{
-            //base.OnBlockPlaced(byItemStack);
-            //ItemSlot itemSlot = Inventory[0];
-            //ItemSlot itemSlot2 = Inventory[1];
-            //if (!itemSlot.Empty && itemSlot2.Empty && BlockLiquidContainerBase.GetContainableProps(itemSlot.Itemstack) != null)
-            //{
-                //Inventory.TryFlipItems(1, itemSlot);
-            //}
+        //base.OnBlockPlaced(byItemStack);
+        //ItemSlot itemSlot = Inventory[0];
+        //ItemSlot itemSlot2 = Inventory[1];
+        //if (!itemSlot.Empty && itemSlot2.Empty && BlockLiquidContainerBase.GetContainableProps(itemSlot.Itemstack) != null)
+        //{
+        //Inventory.TryFlipItems(1, itemSlot);
+        //}
         //}
 
         public override void OnBlockBroken(IPlayer byPlayer = null)
@@ -241,31 +243,39 @@ namespace SteamPower
 
         //public void SealBarrel()
         //{
-            //if (!Sealed)
-            //{
-                //Sealed = true;
-                //SealedSinceTotalHours = Api.World.Calendar.TotalHours;
-                ////MarkDirty(redrawOnClient: true);
-            //}
+        //if (!Sealed)
+        //{
+        //Sealed = true;
+        //SealedSinceTotalHours = Api.World.Calendar.TotalHours;
+        ////MarkDirty(redrawOnClient: true);
+        //}
         //}
 
-        //public void OnPlayerRightClick(IPlayer byPlayer)
-        //{
-            //if (!Sealed)
-            //{
+        public void OnPlayerRightClick(IPlayer byPlayer)
+        {
+            ICoreClientAPI capi = Api as ICoreClientAPI;
+            Api.Logger.Notification("STEAMPOWER: player right click");
+            capi.ShowChatMessage("STEAMPOWER: player right click");
+            if (!Sealed)
+            {
                 //FindMatchingRecipe();
-                //if (Api.Side == EnumAppSide.Client)
-                //{
-                    //toggleInventoryDialogClient(byPlayer);
-                //}
-            //}
-        //}
+                if (Api.Side == EnumAppSide.Client)
+                {
+                    toggleInventoryDialogClient(byPlayer);
+                }
+            }
+        }
 
         protected void toggleInventoryDialogClient(IPlayer byPlayer)
         {
+
+
+            ICoreClientAPI capi = Api as ICoreClientAPI;
+            capi.ShowChatMessage("STEAMPOWER: toggleInvetoryDialogClient activated");
             if (invDialog == null)
             {
-                ICoreClientAPI capi = Api as ICoreClientAPI;
+
+                capi.ShowChatMessage("invDialog has been null");
                 invDialog = new GuiDialogSteampot(Lang.Get("Barrel"), Inventory, Pos, Api as ICoreClientAPI);
                 invDialog.OnClosed += delegate
                 {
@@ -281,34 +291,35 @@ namespace SteamPower
             }
             else
             {
+                capi.ShowChatMessage("invDialog exists");
                 invDialog.TryClose();
             }
         }
 
         //public override void OnReceivedClientPacket(IPlayer player, int packetid, byte[] data)
         //{
-            //base.OnReceivedClientPacket(player, packetid, data);
-            //if (packetid < 1000)
-            //{
-                //Inventory.InvNetworkUtil.HandleClientPacket(player, packetid, data);
-                ////Api.World.BlockAccessor.GetChunkAtBlockPos(Pos).MarkModified();
-                //return;
-            //}
+        //base.OnReceivedClientPacket(player, packetid, data);
+        //if (packetid < 1000)
+        //{
+        //Inventory.InvNetworkUtil.HandleClientPacket(player, packetid, data);
+        ////Api.World.BlockAccessor.GetChunkAtBlockPos(Pos).MarkModified();
+        //return;
+        //}
 
-            //if (packetid == 1001)
-            //{
-                //player.InventoryManager?.CloseInventory(Inventory);
-            //}
+        //if (packetid == 1001)
+        //{
+        //player.InventoryManager?.CloseInventory(Inventory);
+        //}
 
-            //if (packetid == 1000)
-            //{
-                //player.InventoryManager?.OpenInventory(Inventory);
-            //}
+        //if (packetid == 1000)
+        //{
+        //player.InventoryManager?.OpenInventory(Inventory);
+        //}
 
-            //if (packetid == 1337)
-            //{
-                //SealBarrel();
-            //}
+        //if (packetid == 1337)
+        //{
+        //SealBarrel();
+        //}
         //}
 
         public override void OnReceivedServerPacket(int packetid, byte[] data)
@@ -344,29 +355,29 @@ namespace SteamPower
 
         //public override void ToTreeAttributes(ITreeAttribute tree)
         //{
-            //base.ToTreeAttributes(tree);
-            //tree.SetBool("sealed", Sealed);
-            //tree.SetDouble("sealedSinceTotalHours", SealedSinceTotalHours);
+        //base.ToTreeAttributes(tree);
+        //tree.SetBool("sealed", Sealed);
+        //tree.SetDouble("sealedSinceTotalHours", SealedSinceTotalHours);
         //}
 
         //internal MeshData GenMesh()
         //{
-            //if (ownBlock == null)
-            //{
-                //return null;
-            //}
+        //if (ownBlock == null)
+        //{
+        //return null;
+        //}
 
-            //MeshData meshData = ownBlock.GenMesh(inventory[0].Itemstack, inventory[1].Itemstack, Sealed, Pos);
-            //if (meshData.CustomInts != null)
-            //{
-                //for (int i = 0; i < meshData.CustomInts.Count; i++)
-                //{
-                    //meshData.CustomInts.Values[i] |= 134217728;
-                    //meshData.CustomInts.Values[i] |= 67108864;
-                //}
-            //}
+        //MeshData meshData = ownBlock.GenMesh(inventory[0].Itemstack, inventory[1].Itemstack, Sealed, Pos);
+        //if (meshData.CustomInts != null)
+        //{
+        //for (int i = 0; i < meshData.CustomInts.Count; i++)
+        //{
+        //meshData.CustomInts.Values[i] |= 134217728;
+        //meshData.CustomInts.Values[i] |= 67108864;
+        //}
+        //}
 
-            //return meshData;
+        //return meshData;
         //}
 
         public override void OnBlockUnloaded()
@@ -377,8 +388,8 @@ namespace SteamPower
 
         //public override bool OnTesselation(ITerrainMeshPool mesher, ITesselatorAPI tesselator)
         //{
-            ////mesher.AddMeshData(currentMesh);
-            //return true;
+        ////mesher.AddMeshData(currentMesh);
+        //return true;
         //}
     }
 }

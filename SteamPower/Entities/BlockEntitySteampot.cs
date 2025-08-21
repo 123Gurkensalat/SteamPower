@@ -276,7 +276,8 @@ namespace SteamPower
             {
 
                 capi.ShowChatMessage("invDialog has been null");
-                invDialog = new GuiDialogSteampot(Lang.Get("Barrel"), Inventory, Pos, Api as ICoreClientAPI);
+                // invDialog = new GuiDialogSteampot(Lang.Get("Barrel"), Inventory, Pos, Api as ICoreClientAPI);
+                invDialog = new GuiDialogSteampot(Lang.Get("Steampot"), Inventory, Pos, Api as ICoreClientAPI);
                 invDialog.OnClosed += delegate
                 {
                     invDialog = null;

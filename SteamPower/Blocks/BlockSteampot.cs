@@ -396,15 +396,19 @@ namespace SteamPower
 
         public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
         {
+            ICoreClientAPI capi = api as ICoreClientAPI;
+
+            capi.ShowChatMessage("STEAMPOWER: OnblockInteractStart");
+
             if (blockSel != null && !world.Claims.TryAccess(byPlayer, blockSel.Position, EnumBlockAccessFlags.Use))
             {
                 return false;
             }
 
-            BlockEntityBarrel blockEntityBarrel = null;
+            BlockSteampotEntity blockEntityBarrel = null;
             if (blockSel.Position != null)
             {
-                blockEntityBarrel = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockEntityBarrel;
+                blockEntityBarrel = world.BlockAccessor.GetBlockEntity(blockSel.Position) as BlockSteampotEntity;
             }
 
             if (blockEntityBarrel != null && blockEntityBarrel.Sealed)

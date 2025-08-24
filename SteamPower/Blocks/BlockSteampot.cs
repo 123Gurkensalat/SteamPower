@@ -30,6 +30,7 @@ namespace SteamPower
 
         public AssetLocation liquidContentsShape { get; protected set; } = AssetLocation.Create("block/wood/barrel/liquidcontents");
 
+
         public override int GetContainerSlotId(BlockPos pos)
         {
             return 1;

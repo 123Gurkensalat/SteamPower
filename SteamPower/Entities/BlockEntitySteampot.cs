@@ -45,6 +45,8 @@ namespace SteamPower
 
         public override string InventoryClassName => "barrel";
 
+
+
         public bool CanSeal
         {
             get
@@ -61,7 +63,6 @@ namespace SteamPower
 
         public BlockSteampotEntity()
         {
-
             inventory = new InventoryGeneric(2, null, null, (int id, InventoryGeneric self) => (id == 0) ? ((ItemSlot)new ItemSlotBarrelInput(self)) : ((ItemSlot)new ItemSlotLiquidOnly(self, 50f)));
             inventory.BaseWeight = 1f;
             //inventory.OnGetSuitability = GetSuitability;
@@ -80,10 +81,15 @@ namespace SteamPower
                 (inventory[1] as ItemSlotLiquidOnly).CapacityLitres = CapacityLitres;
             }
 
+
+
+
+
+
+
             //if (api.Side == EnumAppSide.Client && currentMesh == null)
             if (api.Side == EnumAppSide.Client)
             {
-
                 //currentMesh = GenMesh();
                 //MarkDirty(redrawOnClient: true);
             }
@@ -94,7 +100,21 @@ namespace SteamPower
             }
 
             //FindMatchingRecipe();
+
+
+
+            //RegisterGameTickListener(EvaporateWaterEveryInterval, 2000);
         }
+
+        private void EvaporateWaterEveryInterval(float dt)
+        {
+
+            ICoreClientAPI capi = Api as ICoreClientAPI;
+            ItemStack stack = GetContent();
+            int i = stack.StackSize;
+            capi.ShowChatMessage("STEAMPOWER: steampot current water level:" + i);
+        }
+
         //private float Inventory_OnAcquireTransitionSpeed1(EnumTransitionType transType, ItemStack stack, float mul)
         //{
         //if (Sealed && CurrentRecipe != null && CurrentRecipe.SealHours > 0.0)
@@ -253,9 +273,16 @@ namespace SteamPower
 
         public void OnPlayerRightClick(IPlayer byPlayer)
         {
+
+
             ICoreClientAPI capi = Api as ICoreClientAPI;
             Api.Logger.Notification("STEAMPOWER: player right click");
             capi.ShowChatMessage("STEAMPOWER: player right click");
+
+
+            // int i = stack.StackSize;
+            // capi.ShowChatMessage("STEAMPOWER: steampot current water level:" + i);
+
             if (!Sealed)
             {
                 //FindMatchingRecipe();

@@ -1,0 +1,30 @@
+{
+	"editor": {},
+	"textureWidth": 192,
+	"textureHeight": 192,
+	"textureSizes": {
+		"andesite1.png": [32, 32],
+		"steel1.png": [32, 32]
+	},
+	"textures": {
+		"andesite1.png": "block/stone/brick/andesite1",
+		"steel1.png": "block/metal/sheet/steel1"
+	},
+	"elements": [
+		{
+			"name": "cube",
+			"from": [0, 0, 0],
+			"to": [32, 32, 32],
+			"rotationOrigin": [0, 0, 0],
+			"faces": {
+				"north": {"texture": "#andesite1.png", "uv": [0, 0, 32, 32]},
+				"east": {"texture": "#steel1.png", "uv": [0, 0, 32, 32]},
+				"south": {"texture": "#andesite1.png", "uv": [0, 0, 32, 32]},
+				"west": {"texture": "#andesite1.png", "uv": [0, 0, 32, 32]},
+				"up": {"texture": "#andesite1.png", "uv": [0, 0, 32, 32]},
+				"down": {"texture": "#andesite1.png", "uv": [0, 0, 32, 32]}
+			}
+		}
+	],
+	"animations": []
+}

@@ -1,0 +1,21 @@
+{
+	"editor": {},
+	"textureWidth": 32,
+	"textureHeight": 32,
+	"textureSizes": {
+		"andesite1.png": [32, 32]
+	},
+	"textures": {
+		"andesite1.png": ""
+	},
+	"elements": [
+		{
+			"name": "cube",
+			"from": [0, 0, 0],
+			"to": [32, 32, 32],
+			"rotationOrigin": [0, 0, 0],
+			"faces": {}
+		}
+	],
+	"animations": []
+}

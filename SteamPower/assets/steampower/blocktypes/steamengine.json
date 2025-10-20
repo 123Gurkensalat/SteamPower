@@ -1,0 +1,22 @@
+{
+  "code": "steamengine",
+  "creativeinventory": {
+    "general": [
+      "*"
+    ]
+  },
+  "shape": {
+    "base": "item/steamengine"
+  },
+  "textures": {
+	"andesite1": {"base": "game:block/stone/brick/andesite1"},
+	"steel1": {"base": "game:block/metal/sheet/steel1"}
+  },
+  "blockmaterial": "Stone",
+  "drawtype": "json",
+  "resistance": 0.5,
+  "sounds": {
+    "place": "game:block/stickplace",
+    "walk": "game:walk/wood"
+  }
+}

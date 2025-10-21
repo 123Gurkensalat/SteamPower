@@ -1,7 +1,7 @@
 {
   "code": "steampot",
-  "class": "steampower.blocksteampot",
-  "entityclass": "steampower.steampot",
+  "class": "steamage.blocksteampot",
+  "entityclass": "steamage.steampot",
   "creativeinventory": {
     "general": [
       "*"

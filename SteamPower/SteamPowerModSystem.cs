@@ -15,6 +15,8 @@ namespace SteamPower
             api.Logger.Notification("STEAMPOWER: starting mod..." + Lang.Get("steampower:hello"));
             api.RegisterBlockClass(Mod.Info.ModID + ".blocksteampot", typeof(BlockSteampot));
             api.RegisterBlockEntityClass(Mod.Info.ModID + ".steampot", typeof(BlockSteampotEntity));
+            api.RegisterBlockClass(Mod.Info.ModID + ".blocksteamengine", typeof(BlockSteamengine));
+            api.RegisterBlockEntityClass(Mod.Info.ModID + ".steamengine", typeof(BlockEntitySteamengine));
             api.Logger.Notification("STEAMPOWER: mod has started" + Lang.Get("steampower:hello"));
         }
 

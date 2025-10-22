@@ -1,5 +1,7 @@
 {
   "code": "steamengine",
+  "class": "steampower.blocksteamengine",
+  "entityclass": "steampower.steamengine",
   "creativeinventory": {
     "general": [
       "*"

@@ -23,12 +23,24 @@ using System.Threading;
 
 namespace SteamPower
 {
-    internal class BlockEntitySteamengine : BlockEntity
+    internal class BlockEntitySteamengine : BlockEntityContainer
     {
+        public override InventoryBase Inventory => new InventoryStoneCoffin(2, null, null);
+
+        public override string InventoryClassName => "stonecoffin";
+
         public override void OnBlockPlaced(ItemStack byItemStack = null)
         {
-            Thread.Sleep(1500);
-            (Api as ICoreClientAPI).SendChatMessage("STEAMPOWER: steamengine entity placed");
+
+        }
+        public bool Interact(IPlayer byPlayer, bool preferThis)
+        {
+
+            MultiblockStructure ms = Block.Attributes["multiblockStructure"].AsObject<MultiblockStructure>();
+            ms.InitForUse(0);
+            ms.HighlightIncompleteParts(Api.World, byPlayer, Pos);
+            (Api as ICoreClientAPI).SendChatMessage("STEAMPOWER: steamengine entity interacted with");
+            return true;
         }
     }
 }

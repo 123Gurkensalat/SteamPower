@@ -16,42 +16,53 @@ namespace SteamPower
 {
     internal class BlockSteamengine : Block
     {
-
-
-        public override bool DoPlaceBlock(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel, ItemStack byItemStack)
+        public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
         {
-
-            (api as ICoreClientAPI).SendChatMessage("STEAMPOWER: steamengine placed");
-        bool flag = true;
-        bool flag2 = false;
-        BlockBehavior[] blockBehaviors = BlockBehaviors;
-        foreach (BlockBehavior obj in blockBehaviors)
-        {
-            EnumHandling handling = EnumHandling.PassThrough;
-            bool flag3 = obj.DoPlaceBlock(world, byPlayer, blockSel, byItemStack, ref handling);
-            if (handling != EnumHandling.PassThrough)
+            BlockPos pos = blockSel.Position;
+            BlockEntitySteamengine besc = world.BlockAccessor.GetBlockEntity(pos) as BlockEntitySteamengine;
+            if (besc != null)
             {
-                flag = flag && flag3;
-                flag2 = true;
+                besc.Interact(byPlayer, true);
+                (byPlayer as IClientPlayer)?.TriggerFpAnimation(EnumHandInteract.HeldItemInteract);
+                return true;
             }
-
-            if (handling == EnumHandling.PreventSubsequent)
-            {
-                return flag;
-            }
+            return base.OnBlockInteractStart(world, byPlayer, blockSel);
         }
 
-        if (flag2)
-        {
-            return flag;
-        }
-
-        world.BlockAccessor.SetBlock(BlockId, blockSel.Position, byItemStack);
-        return true;
-
-
-            //this.DoPlaceBlock(world, byPlayer, blockSel, byItemStack);
-            //return true;
-        }
+        //     public override bool DoPlaceBlock(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel, ItemStack byItemStack)
+        //     {
+        //
+        //         (api as ICoreClientAPI).SendChatMessage("STEAMPOWER: steamengine placed");
+        //     bool flag = true;
+        //     bool flag2 = false;
+        //     BlockBehavior[] blockBehaviors = BlockBehaviors;
+        //     foreach (BlockBehavior obj in blockBehaviors)
+        //     {
+        //         EnumHandling handling = EnumHandling.PassThrough;
+        //         bool flag3 = obj.DoPlaceBlock(world, byPlayer, blockSel, byItemStack, ref handling);
+        //         if (handling != EnumHandling.PassThrough)
+        //         {
+        //             flag = flag && flag3;
+        //             flag2 = true;
+        //         }
+        //
+        //         if (handling == EnumHandling.PreventSubsequent)
+        //         {
+        //             return flag;
+        //         }
+        //     }
+        //
+        //     if (flag2)
+        //     {
+        //         return flag;
+        //     }
+        //
+        //     world.BlockAccessor.SetBlock(BlockId, blockSel.Position, byItemStack);
+        //     return true;
+        //
+        //
+        //         //this.DoPlaceBlock(world, byPlayer, blockSel, byItemStack);
+        //         //return true;
+        //     }
     }
 }

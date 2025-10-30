@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+
 using Cake.Common;
 using Cake.Common.IO;
 using Cake.Common.Tools.DotNet;
@@ -8,8 +9,10 @@ using Cake.Common.Tools.DotNet.Publish;
 using Cake.Core;
 using Cake.Frosting;
 using Cake.Json;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
 using Vintagestory.API.Common;
 
 
@@ -27,10 +30,22 @@ public static class Program
 public class BuildContext : FrostingContext
 {
     public const string ProjectName = "SteamAge";
-    public string BuildConfiguration { get; set; }
-    public string Version { get; }
-    public string Name { get; }
-    public bool SkipJsonValidation { get; set; }
+    public string BuildConfiguration
+    {
+        get; set;
+    }
+    public string Version
+    {
+        get;
+    }
+    public string Name
+    {
+        get;
+    }
+    public bool SkipJsonValidation
+    {
+        get; set;
+    }
 
     public BuildContext(ICakeContext context)
         : base(context)

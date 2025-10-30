@@ -1,7 +1,11 @@
 {
   "code": "steampot",
-  "class": "steamage.blocksteampot",
-  "entityclass": "steamage.steampot",
+  "behaviors": [
+    {"name": "steamgenerator"}
+  ],
+  "entityBehaviors": [
+    {"name": "esteamgenerator"}
+  ],
   "creativeinventory": {
     "general": [
       "*"
@@ -10,19 +14,11 @@
   "attributes": {
     "capacityLitres": 10
   },
-  "shape": {
-    "base": "item/steampot"
-  },
+  "shape": { "base": "item/steampot" },
   "textures": {
-    "ceramic-dark": {
-      "base": "game:block/clay/ceramic-dark"
-    },
-    "copper": {
-      "base": "game:item/resource/plate/copper"
-    },
-    "tinbronze": {
-      "base": "game:item/resource/plate/tinbronze"
-    }
+    "ceramic-dark": { "base": "game:block/clay/ceramic-dark" },
+    "copper": { "base": "game:item/resource/plate/copper" },
+    "tinbronze": { "base": "game:item/resource/plate/tinbronze" }
   },
   "blockmaterial": "Stone",
   "drawtype": "json",

@@ -3,8 +3,14 @@
 	"textureWidth": 96,
 	"textureHeight": 96,
 	"textureSizes": {
-		"andesite1.png": [16, 16],
-		"steel1.png": [16, 16]
+		"andesite1.png": [
+			16,
+			16
+		],
+		"steel1.png": [
+			16,
+			16
+		]
 	},
 	"textures": {
 		"andesite1.png": "block/stone/brick/andesite1",
@@ -13,16 +19,76 @@
 	"elements": [
 		{
 			"name": "cube",
-			"from": [0, 0, 0],
-			"to": [16, 16, 16],
-			"rotationOrigin": [0, 0, 0],
+			"from": [
+				0,
+				0,
+				0
+			],
+			"to": [
+				16,
+				16,
+				16
+			],
+			"rotationOrigin": [
+				0,
+				0,
+				0
+			],
 			"faces": {
-				"north": {"texture": "#andesite1", "uv": [0, 0, 32, 32]},
-				"east": {"texture": "#steel1", "uv": [0, 0, 32, 32]},
-				"south": {"texture": "#andesite1", "uv": [0, 0, 32, 32]},
-				"west": {"texture": "#andesite1", "uv": [0, 0, 32, 32]},
-				"up": {"texture": "#andesite1", "uv": [0, 0, 32, 32]},
-				"down": {"texture": "#andesite1", "uv": [0, 0, 32, 32]}
+				"north": {
+					"texture": "#steel1",
+					"uv": [
+						0,
+						0,
+						32,
+						32
+					]
+				},
+				"east": {
+					"texture": "#andesite1",
+					"uv": [
+						0,
+						0,
+						32,
+						32
+					]
+				},
+				"south": {
+					"texture": "#andesite1",
+					"uv": [
+						0,
+						0,
+						32,
+						32
+					]
+				},
+				"west": {
+					"texture": "#andesite1",
+					"uv": [
+						0,
+						0,
+						32,
+						32
+					]
+				},
+				"up": {
+					"texture": "#andesite1",
+					"uv": [
+						0,
+						0,
+						32,
+						32
+					]
+				},
+				"down": {
+					"texture": "#andesite1",
+					"uv": [
+						0,
+						0,
+						32,
+						32
+					]
+				}
 			}
 		}
 	],

@@ -14,11 +14,15 @@ public class BEBehaviorSteamGenerator : BlockEntityBehavior, IRegister
     public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldAccessForResolve)
     {
         base.FromTreeAttributes(tree, worldAccessForResolve);
+        Water = tree.GetFloat("water", 0f);
+        Capacity = tree.GetFloat("capacity", 0f);
     }
 
     public override void ToTreeAttributes(ITreeAttribute tree)
     {
         base.ToTreeAttributes(tree);
+        tree.SetFloat("water", Water);
+        tree.SetFloat("capacity", Capacity);
     }
 }
 

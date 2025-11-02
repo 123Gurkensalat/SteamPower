@@ -1,7 +1,7 @@
 using SteamAge.BEBehaviors;
 using SteamAge.Gui;
-using SteamAge.Blocks;
 using SteamAge.BlockEntities;
+using SteamAge.Blocks;
 
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -15,7 +15,6 @@ namespace SteamAge.BlockBehaviors;
 public class BlockBehaviorSteamGenerator : BlockBehavior, IRegister
 {
     public static string Name => "steamgenerator";
-    private BlockSteamSystem system => block as BlockSteamSystem;
 
     public BlockBehaviorSteamGenerator(Block block) : base(block) { }
 
@@ -24,13 +23,13 @@ public class BlockBehaviorSteamGenerator : BlockBehavior, IRegister
     public override void OnBlockPlaced(IWorldAccessor world, BlockPos blockPos, ref EnumHandling handling)
     {
         base.OnBlockPlaced(world, blockPos, ref handling);
-        var steamGenerator = system.FindOrCreate<BEBehaviorSteamGenerator>(world, blockPos);
+        var steamGenerator = BlockSteamSystem.FindOrCreate<BEBehaviorSteamGenerator>(world, blockPos);
         steamGenerator.Capacity += 10f;
     }
 
     public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel, ref EnumHandling handling)
     {
-        var blockEntity = system.Find(world, blockSel.Position);
+        var blockEntity = BlockSteamSystem.Find(world, blockSel.Position);
         if (!HandleLiquidTransfer(world, byPlayer, blockSel, blockEntity))
         {
             HandleDialogGui(world, blockSel, blockEntity);

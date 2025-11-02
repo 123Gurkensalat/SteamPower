@@ -9,6 +9,5 @@ public class BEBehaviorSteamContainer : BlockEntityBehavior, IRegister
     public Gas Air = new Gas();
     public BEBehaviorSteamContainer(BlockEntity blockEntity) : base(blockEntity)
     {
-
     }
 }

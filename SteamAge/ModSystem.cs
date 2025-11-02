@@ -28,21 +28,23 @@ public class SteamAgeModSystem : ModSystem
 
     private void RegisterBlockEntityClasses(ICoreAPI api)
     {
-        api.RegisterBlockEntityClass("steamsystem", typeof(BESteamSystem));
+        api.Register<BESteamSystem>();
     }
 
     private void RegisterBlockBehaviorClasses(ICoreAPI api)
     {
-        api.RegisterBlockBehaviorClass("steamgenerator", typeof(BlockBehaviorSteamGenerator));
-        api.RegisterBlockBehaviorClass("steamcontainer", typeof(BlockBehaviorSteamContainer));
-        api.RegisterBlockBehaviorClass("steamconsumer", typeof(BlockBehaviorSteamConsumer));
+        api.Register<BlockBehaviorSteamGenerator>();
+        api.Register<BlockBehaviorSteamContainer>();
+        api.Register<BlockBehaviorSteamConsumer>();
+        api.Register<BlockBehaviorHeatGenerator>();
     }
 
     private void RegisterBlockEntityBehaviorClasses(ICoreAPI api)
     {
-        api.RegisterBlockEntityBehaviorClass("esteamgenerator", typeof(BEBehaviorSteamGenerator));
-        api.RegisterBlockEntityBehaviorClass("esteamcontainer", typeof(BEBehaviorSteamContainer));
-        api.RegisterBlockEntityBehaviorClass("esteamconsumer", typeof(BEBehaviorSteamConsumer));
+        api.Register<BEBehaviorSteamGenerator>();
+        api.Register<BEBehaviorSteamContainer>();
+        api.Register<BEBehaviorSteamConsumer>();
+        api.Register<BEBehaviorHeatGenerator>();
     }
 
     public override void StartServerSide(ICoreServerAPI api)

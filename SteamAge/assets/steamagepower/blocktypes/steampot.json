@@ -2,8 +2,8 @@
   "code": "steampot",
   "class": "steamsystem",
   "behaviors": [
-    {"name": "steamgenerator"},
-    {"name": "steamcontainer"}
+    { "name": "steamgenerator" },
+    { "name": "steamcontainer" }
   ],
   "creativeinventory": {
     "general": [

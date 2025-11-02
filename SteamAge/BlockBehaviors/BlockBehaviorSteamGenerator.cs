@@ -1,5 +1,7 @@
 using SteamAge.BEBehaviors;
 using SteamAge.Gui;
+using SteamAge.Blocks;
+using SteamAge.BlockEntities;
 
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -12,27 +14,25 @@ namespace SteamAge.BlockBehaviors;
 
 public class BlockBehaviorSteamGenerator : BlockBehavior
 {
+    private BlockSteamSystem system => block as BlockSteamSystem;
+
     public BlockBehaviorSteamGenerator(Block block) : base(block) { }
 
     public WaterTightContainableProps GetContainableProps(ItemStack stack) => BlockLiquidContainerBase.GetContainableProps(stack);
 
-    private BEBehaviorSteamGenerator GetEntityBehavior(IWorldAccessor world, BlockSelection blockSel)
-    {
-        return world.BlockAccessor.GetBlockEntity(blockSel.Position)?.GetBehavior<BEBehaviorSteamGenerator>();
-    }
-
     public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel, ref EnumHandling handling)
     {
-        if (!HandleLiquidTransfer(world, byPlayer, blockSel))
+        var blockEntity = system.Find(world, blockSel);
+        if (!HandleLiquidTransfer(world, byPlayer, blockSel, blockEntity))
         {
-            HandleDialogGui(world, blockSel);
+            HandleDialogGui(world, blockSel, blockEntity);
             handling = EnumHandling.Handled;
         }
         return true;
     }
 
     /// returns if LiquidTransfer was possible
-    private bool HandleLiquidTransfer(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
+    private bool HandleLiquidTransfer(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel, BESteamSystem blockEntity)
     {
         ItemSlot activeHotbarSlot = byPlayer.InventoryManager.ActiveHotbarSlot;
         if (activeHotbarSlot.Empty)
@@ -41,7 +41,7 @@ public class BlockBehaviorSteamGenerator : BlockBehavior
         if (activeHotbarSlot.Itemstack.Collectible is not ILiquidInterface)
             return false;
 
-        var entityBehavior = GetEntityBehavior(world, blockSel);
+        var steamGenerator = blockEntity.GetBehavior<BEBehaviorSteamGenerator>();
         var collectible = activeHotbarSlot.Itemstack.Collectible;
         bool shiftKey = byPlayer.WorldData.EntityControls.ShiftKey;
         bool ctrlKey = byPlayer.WorldData.EntityControls.CtrlKey;
@@ -56,11 +56,11 @@ public class BlockBehaviorSteamGenerator : BlockBehavior
                 return false;
             }
             float desiredLitres = (ctrlKey ? objLso.TransferSizeLitres : objLso.CapacityLitres);
-            var (stacks, litres) = GetTransferLitres(content, entityBehavior.Water, desiredLitres, 10f);
+            var (stacks, litres) = GetTransferLitres(content, steamGenerator.Water, desiredLitres, 10f);
             if (stacks > 0)
             {
                 content.StackSize -= stacks;
-                entityBehavior.Water += litres;
+                steamGenerator.Water += litres;
 
                 if (content.StackSize <= 0)
                 {
@@ -68,7 +68,7 @@ public class BlockBehaviorSteamGenerator : BlockBehavior
                 }
 
                 activeHotbarSlot.MarkDirty();
-                entityBehavior.Blockentity.MarkDirty();
+                steamGenerator.Blockentity.MarkDirty();
                 DoLiquidMovedEffects(world, byPlayer, content, stacks, EnumLiquidDirection.Pour);
                 return true;
             }
@@ -87,13 +87,13 @@ public class BlockBehaviorSteamGenerator : BlockBehavior
                 content = objLsi.GetContent(activeHotbarSlot.Itemstack);
             }
 
-            var (stacks, litres) = GetTransferLitres(activeHotbarSlot.Itemstack, entityBehavior.Water, content, desiredLitres, 10);
+            var (stacks, litres) = GetTransferLitres(activeHotbarSlot.Itemstack, steamGenerator.Water, content, desiredLitres, 10);
             if (stacks > 0)
             {
-                entityBehavior.Water -= litres;
+                steamGenerator.Water -= litres;
                 content.StackSize += stacks;
                 activeHotbarSlot.MarkDirty();
-                entityBehavior.Blockentity.MarkDirty();
+                steamGenerator.Blockentity.MarkDirty();
                 DoLiquidMovedEffects(world, byPlayer, content, stacks, EnumLiquidDirection.Fill);
                 return true;
             }
@@ -101,41 +101,33 @@ public class BlockBehaviorSteamGenerator : BlockBehavior
         return false;
     }
 
-    private void HandleDialogGui(IWorldAccessor world, BlockSelection blockSel)
+    private void HandleDialogGui(IWorldAccessor world, BlockSelection blockSel, BESteamSystem blockEntity)
     {
-        var steamGenerator = GetEntityBehavior(world, blockSel);
-        var steamContainer = steamGenerator.Blockentity.GetBehavior<BEBehaviorSteamContainer>();
+        if (world.Api is not ICoreClientAPI capi) return;
 
-        if (steamGenerator == null)
-        {
-            world.Api.Logger.Error("BlockBehaviorSteamGenerator has no corresponding BEBehaviorSteamGenerator");
-            return;
-        }
+        var steamGenerator = blockEntity.GetBehavior<BEBehaviorSteamGenerator>();
+        var steamContainer = blockEntity.GetBehavior<BEBehaviorSteamContainer>();
 
-        if (world.Api is ICoreClientAPI capi)
-        {
-            var dialog = new GuiSteamGenerator(capi, steamGenerator, steamContainer);
-            dialog.TryOpen();
-        }
+        var dialog = new GuiSteamGenerator(capi, steamGenerator, steamContainer);
+        dialog.TryOpen();
     }
 
-    public void DoLiquidMovedEffects(IWorldAccessor world, IPlayer player, ItemStack contentStack, int moved, EnumLiquidDirection dir)
+    private void DoLiquidMovedEffects(IWorldAccessor world, IPlayer player, ItemStack contentStack, int moved, EnumLiquidDirection dir)
     {
-        if (player != null)
-        {
-            WaterTightContainableProps containableProps = GetContainableProps(contentStack);
-            float num = moved / containableProps.ItemsPerLitre;
-            if (player is IClientPlayer cplayer)
-            {
-                cplayer.TriggerFpAnimation(EnumHandInteract.HeldItemInteract);
-            }
+        if (player == null) return;
 
-            world.PlaySoundAt((dir == EnumLiquidDirection.Fill) ? containableProps.FillSound : containableProps.PourSound, player.Entity, player, true, 16f, GameMath.Clamp(num / 5f, 0.35f, 1f));
-            world.SpawnCubeParticles(player.Entity.Pos.AheadCopy(0.25).XYZ.Add(0.0, player.Entity.SelectionBox.Y2 / 2.0, 0.0), contentStack, 0.75f, (int)num * 2, 0.45f, null, null);
+        WaterTightContainableProps containableProps = GetContainableProps(contentStack);
+        float num = moved / containableProps.ItemsPerLitre;
+        if (player is IClientPlayer cplayer)
+        {
+            cplayer.TriggerFpAnimation(EnumHandInteract.HeldItemInteract);
         }
+
+        world.PlaySoundAt((dir == EnumLiquidDirection.Fill) ? containableProps.FillSound : containableProps.PourSound, player.Entity, player, true, 16f, GameMath.Clamp(num / 5f, 0.35f, 1f));
+        world.SpawnCubeParticles(player.Entity.Pos.AheadCopy(0.25).XYZ.Add(0.0, player.Entity.SelectionBox.Y2 / 2.0, 0.0), contentStack, 0.75f, (int)num * 2, 0.45f, null, null);
     }
 
-    public (int, float) GetTransferLitres(ItemStack from, float to, float desiredLitres, float capacity)
+    private (int, float) GetTransferLitres(ItemStack from, float to, float desiredLitres, float capacity)
     {
         WaterTightContainableProps props = GetContainableProps(from);
         if (props == null)
@@ -150,7 +142,7 @@ public class BlockBehaviorSteamGenerator : BlockBehavior
         return (stacks, transferLitres);
     }
 
-    public (int, float) GetTransferLitres(ItemStack container, float from, ItemStack to, float desiredLitres, float capacity)
+    private (int, float) GetTransferLitres(ItemStack container, float from, ItemStack to, float desiredLitres, float capacity)
     {
         var toLiquidSink = container.Collectible as ILiquidSink;
         if (to == null)

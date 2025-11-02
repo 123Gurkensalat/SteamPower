@@ -1,18 +1,14 @@
 {
   "code": "steampot",
+  "class": "steamsystem",
   "behaviors": [
-    {"name": "steamgenerator"}
-  ],
-  "entityBehaviors": [
-    {"name": "esteamgenerator"}
+    {"name": "steamgenerator"},
+    {"name": "steamcontainer"}
   ],
   "creativeinventory": {
     "general": [
       "*"
     ]
-  },
-  "attributes": {
-    "capacityLitres": 10
   },
   "shape": { "base": "item/steampot" },
   "textures": {

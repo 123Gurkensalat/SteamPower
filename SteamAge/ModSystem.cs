@@ -1,5 +1,7 @@
 ﻿using SteamAge.BEBehaviors;
 using SteamAge.BlockBehaviors;
+using SteamAge.Blocks;
+using SteamAge.BlockEntities;
 
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -21,10 +23,12 @@ public class SteamAgeModSystem : ModSystem
 
     private void RegisterBlockClasses(ICoreAPI api)
     {
+        api.RegisterBlockClass("steamsystem", typeof(BlockSteamSystem));
     }
 
     private void RegisterBlockEntityClasses(ICoreAPI api)
     {
+        api.RegisterBlockEntityClass("steamsystem", typeof(BESteamSystem));
     }
 
     private void RegisterBlockBehaviorClasses(ICoreAPI api)

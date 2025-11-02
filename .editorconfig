@@ -15,7 +15,7 @@ dotnet_separate_import_directive_groups = true
 csharp_using_directive_placement = outside_namespace
 
 # Braces
-csharp_preserve_single_line_blocks = false
+csharp_preserve_single_line_blocks = true
 csharp_new_line_before_open_brace = all
 
 # var usage

@@ -5,7 +5,7 @@ namespace SteamAge.BlockEntities;
 /// <summary>
 /// This class holds all BEBehaviors in the current system
 /// </summary>
-public class BESteamSystem : BlockEntity
+public class BESteamSystem : BlockEntity, IRegister
 {
-
+    public static string Name => "steamsystem";
 }

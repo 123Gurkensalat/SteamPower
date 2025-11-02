@@ -3,9 +3,11 @@ using Vintagestory.API.Datastructures;
 
 namespace SteamAge.BEBehaviors;
 
-public class BEBehaviorSteamGenerator : BlockEntityBehavior
+public class BEBehaviorSteamGenerator : BlockEntityBehavior, IRegister
 {
+    public static string Name => "esteamgenerator";
     public float Water = 0f;
+    public float Capacity = 0f;
 
     public BEBehaviorSteamGenerator(BlockEntity blockEntity) : base(blockEntity) { }
 

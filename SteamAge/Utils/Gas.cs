@@ -1,8 +1,7 @@
-
 namespace SteamAge;
 
 public class Gas
 {
-    public float Volume = 0;
-    public float Pressure = 1;
+    public float Volume = 0f;
+    public float Pressure = 1f;
 }

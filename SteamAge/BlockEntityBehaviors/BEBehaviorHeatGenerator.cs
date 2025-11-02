@@ -2,7 +2,8 @@ using Vintagestory.API.Common;
 
 namespace SteamAge.BlockEntities;
 
-public class BEBehaviorHeatGenerator : BlockEntityBehavior
+public class BEBehaviorHeatGenerator : BlockEntityBehavior, IRegister
 {
-    public BEBehaviorSteamGenerator(BlockEntity entity) : base(entity) { }
+    public static string Name => "eheatgenerator";
+    public BEBehaviorHeatGenerator(BlockEntity entity) : base(entity) { }
 }

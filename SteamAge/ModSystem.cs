@@ -23,7 +23,7 @@ public class SteamAgeModSystem : ModSystem
 
     private void RegisterBlockClasses(ICoreAPI api)
     {
-        api.RegisterBlockClass("steamsystem", typeof(BlockSteamSystem));
+        api.Register<BlockSteamSystem>();
     }
 
     private void RegisterBlockEntityClasses(ICoreAPI api)

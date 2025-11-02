@@ -12,17 +12,25 @@ using EnumLiquidDirection = Vintagestory.GameContent.BlockLiquidContainerBase.En
 
 namespace SteamAge.BlockBehaviors;
 
-public class BlockBehaviorSteamGenerator : BlockBehavior
+public class BlockBehaviorSteamGenerator : BlockBehavior, IRegister
 {
+    public static string Name => "steamgenerator";
     private BlockSteamSystem system => block as BlockSteamSystem;
 
     public BlockBehaviorSteamGenerator(Block block) : base(block) { }
 
     public WaterTightContainableProps GetContainableProps(ItemStack stack) => BlockLiquidContainerBase.GetContainableProps(stack);
 
+    public override void OnBlockPlaced(IWorldAccessor world, BlockPos blockPos, ref EnumHandling handling)
+    {
+        base.OnBlockPlaced(world, blockPos, ref handling);
+        var steamGenerator = system.FindOrCreate<BEBehaviorSteamGenerator>(world, blockPos);
+        steamGenerator.Capacity += 10f;
+    }
+
     public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel, ref EnumHandling handling)
     {
-        var blockEntity = system.Find(world, blockSel);
+        var blockEntity = system.Find(world, blockSel.Position);
         if (!HandleLiquidTransfer(world, byPlayer, blockSel, blockEntity))
         {
             HandleDialogGui(world, blockSel, blockEntity);

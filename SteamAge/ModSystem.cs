@@ -1,5 +1,4 @@
-﻿using SteamAge.BEBehaviors;
-using SteamAge.BlockBehaviors;
+﻿using SteamAge.BlockBehaviors;
 using SteamAge.Blocks;
 using SteamAge.BlockEntities;
 
@@ -41,10 +40,6 @@ public class SteamAgeModSystem : ModSystem
 
     private void RegisterBlockEntityBehaviorClasses(ICoreAPI api)
     {
-        api.Register<BEBehaviorSteamGenerator>();
-        api.Register<BEBehaviorSteamContainer>();
-        api.Register<BEBehaviorSteamConsumer>();
-        api.Register<BEBehaviorHeatGenerator>();
     }
 
     public override void StartServerSide(ICoreServerAPI api)

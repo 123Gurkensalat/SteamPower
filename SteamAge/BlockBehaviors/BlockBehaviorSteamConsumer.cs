@@ -1,8 +1,8 @@
 using Vintagestory.API.Common;
+using Vintagestory.API.MathTools;
 
 using SteamAge.Blocks;
-using SteamAge.BEBehaviors;
-using Vintagestory.API.MathTools;
+using SteamAge.BlockEntities;
 
 namespace SteamAge.BlockBehaviors;
 
@@ -15,6 +15,6 @@ public class BlockBehaviorSteamConsumer : BlockBehavior, IRegister
     public override void OnBlockPlaced(IWorldAccessor world, BlockPos blockPos, ref EnumHandling handling)
     {
         base.OnBlockPlaced(world, blockPos, ref handling);
-        BlockSteamSystem.FindOrCreate<BEBehaviorSteamConsumer>(world, blockPos);
+        BlockSteamSystem.FindOrCreate<SteamConsumer>(world, blockPos);
     }
 }

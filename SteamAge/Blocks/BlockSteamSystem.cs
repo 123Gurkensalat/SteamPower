@@ -16,10 +16,10 @@ public class BlockSteamSystem : Block, IRegister
     public static string Name => "steamsystem";
 
     /// <summary>
-    /// Searches the system for the BlockEntity. Will create a BlockEntity if none were found. Will create a BEBehavior if none were found.
+    /// Searches the system for the BlockEntity. Will create a BlockEntity if none were found. Will create a BEComponent if none were found.
     /// </summary>
-    /// <returns>The found or created BEBehavior</returns>
-    public static T FindOrCreate<T>(IWorldAccessor world, BlockPos pos) where T : BlockEntityBehavior, IRegister
+    /// <returns>The found or created BEComponent</returns>
+    public static T FindOrCreate<T>(IWorldAccessor world, BlockPos pos) where T : BEComponent, new()
     {
         var blockEntity = Find(world, pos);
 
@@ -29,13 +29,13 @@ public class BlockSteamSystem : Block, IRegister
             blockEntity = world.BlockAccessor.GetBlockEntity<BESteamSystem>(pos);
         }
 
-        var behavior = blockEntity.GetBehavior<T>();
-        if (behavior == null)
+        var component = blockEntity.GetComponent<T>();
+        if (component == null)
         {
-            behavior = blockEntity.AddBehavior<T>(world);
+            component = blockEntity.AddComponent<T>();
         }
 
-        return behavior;
+        return component;
     }
 
     /// <summary>
@@ -47,10 +47,10 @@ public class BlockSteamSystem : Block, IRegister
     }
 
     /// <summary>
-    /// Searches the system for its BlockEntity and returns the given BEBehavior
+    /// Searches the system for its BlockEntity and returns the given BEComponent
     /// </summary>
-    public static T Get<T>(IWorldAccessor world, BlockPos pos) where T : BlockEntityBehavior
+    public static T Get<T>(IWorldAccessor world, BlockPos pos) where T : BEComponent
     {
-        return Find(world, pos)?.GetBehavior<T>();
+        return Find(world, pos)?.GetComponent<T>();
     }
 }

@@ -1,8 +1,8 @@
 using Cairo;
 
-using SteamAge.BEBehaviors;
-
 using Vintagestory.API.Client;
+
+using SteamAge.BlockEntities;
 
 namespace SteamAge.Gui;
 
@@ -10,12 +10,13 @@ public class GuiSteamGenerator : GuiDialog
 {
     public override string ToggleKeyCombinationCode => null;
 
-    BEBehaviorSteamGenerator generator;
-    BEBehaviorSteamContainer container;
-    public GuiSteamGenerator(ICoreClientAPI capi, BEBehaviorSteamGenerator steamGenerator, BEBehaviorSteamContainer steamContainer) : base(capi)
+    SteamGenerator generator;
+    SteamContainer container;
+    public GuiSteamGenerator(ICoreClientAPI capi, SteamGenerator steamGenerator, SteamContainer steamContainer) : base(capi)
     {
         generator = steamGenerator;
         container = steamContainer;
+
         // Auto-sized dialog at the center of the screen
         ElementBounds dialogBounds = ElementStdBounds.AutosizedMainDialog.WithAlignment(EnumDialogArea.CenterMiddle);
 

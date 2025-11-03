@@ -1,4 +1,3 @@
-using SteamAge.BEBehaviors;
 using SteamAge.Gui;
 using SteamAge.BlockEntities;
 using SteamAge.Blocks;
@@ -23,7 +22,7 @@ public class BlockBehaviorSteamGenerator : BlockBehavior, IRegister
     public override void OnBlockPlaced(IWorldAccessor world, BlockPos blockPos, ref EnumHandling handling)
     {
         base.OnBlockPlaced(world, blockPos, ref handling);
-        var steamGenerator = BlockSteamSystem.FindOrCreate<BEBehaviorSteamGenerator>(world, blockPos);
+        var steamGenerator = BlockSteamSystem.FindOrCreate<SteamGenerator>(world, blockPos);
         steamGenerator.Capacity += 10f;
     }
 
@@ -48,7 +47,7 @@ public class BlockBehaviorSteamGenerator : BlockBehavior, IRegister
         if (activeHotbarSlot.Itemstack.Collectible is not ILiquidInterface)
             return false;
 
-        var steamGenerator = blockEntity.GetBehavior<BEBehaviorSteamGenerator>();
+        var steamGenerator = blockEntity.GetComponent<SteamGenerator>();
         var collectible = activeHotbarSlot.Itemstack.Collectible;
         bool shiftKey = byPlayer.WorldData.EntityControls.ShiftKey;
         bool ctrlKey = byPlayer.WorldData.EntityControls.CtrlKey;
@@ -75,7 +74,7 @@ public class BlockBehaviorSteamGenerator : BlockBehavior, IRegister
                 }
 
                 activeHotbarSlot.MarkDirty();
-                steamGenerator.Blockentity.MarkDirty();
+                blockEntity.MarkDirty();
                 DoLiquidMovedEffects(world, byPlayer, content, stacks, EnumLiquidDirection.Pour);
                 return true;
             }
@@ -100,7 +99,7 @@ public class BlockBehaviorSteamGenerator : BlockBehavior, IRegister
                 steamGenerator.Water -= litres;
                 content.StackSize += stacks;
                 activeHotbarSlot.MarkDirty();
-                steamGenerator.Blockentity.MarkDirty();
+                blockEntity.MarkDirty();
                 DoLiquidMovedEffects(world, byPlayer, content, stacks, EnumLiquidDirection.Fill);
                 return true;
             }
@@ -112,8 +111,8 @@ public class BlockBehaviorSteamGenerator : BlockBehavior, IRegister
     {
         if (world.Api is not ICoreClientAPI capi) return;
 
-        var steamGenerator = blockEntity.GetBehavior<BEBehaviorSteamGenerator>();
-        var steamContainer = blockEntity.GetBehavior<BEBehaviorSteamContainer>();
+        var steamGenerator = blockEntity.GetComponent<SteamGenerator>();
+        var steamContainer = blockEntity.GetComponent<SteamContainer>();
 
         var dialog = new GuiSteamGenerator(capi, steamGenerator, steamContainer);
         dialog.TryOpen();

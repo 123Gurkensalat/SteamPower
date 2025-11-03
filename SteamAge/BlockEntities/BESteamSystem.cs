@@ -2,22 +2,9 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 
 using System;
-using System.Collections;
-
-using SteamAge.BEBehaviors;
+using System.Collections.Generic;
 
 namespace SteamAge.BlockEntities;
-
-[Flags]
-public enum ComponentFlag : byte
-{
-    None = 0,
-    SteamContainer = 1 << 0,
-    SteamGenerator = 1 << 1,
-    SteamConsumer = 1 << 2,
-    HeatGenerator = 1 << 3,
-    All = (1 << 4) - 1
-}
 
 /// <summary>
 /// This class holds all BEBehaviors in the current system
@@ -25,69 +12,62 @@ public enum ComponentFlag : byte
 public class BESteamSystem : BlockEntity, IRegister
 {
     public static string Name => "steamsystem";
-    public BitArray ComponentMask = new(8, false);
+    Dictionary<Type, BEComponent> components = new();
 
     public override void Initialize(ICoreAPI api)
     {
         base.Initialize(api);
     }
+
     public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldAccessForResolve)
     {
         base.FromTreeAttributes(tree, worldAccessForResolve);
-        ComponentMask = new(tree.GetBytes("mask", new byte[1] { 0 }));
+
+        TryAddComponentFromTreeAttributes<SteamGenerator>(tree, worldAccessForResolve);
+        TryAddComponentFromTreeAttributes<SteamContainer>(tree, worldAccessForResolve);
+        TryAddComponentFromTreeAttributes<SteamConsumer>(tree, worldAccessForResolve);
+        TryAddComponentFromTreeAttributes<HeatGenerator>(tree, worldAccessForResolve);
+
+        foreach (var (_, component) in components)
+        {
+            component.FromTreeAttributes(tree, worldAccessForResolve);
+        }
     }
 
     public override void ToTreeAttributes(ITreeAttribute tree)
     {
-        try
+        Api?.Logger.Chat(GetComponent<SteamGenerator>().Water.ToString());
+        base.ToTreeAttributes(tree);
+        foreach (var (_, component) in components)
         {
-            base.ToTreeAttributes(tree);
-            byte[] bytes = new byte[1];
-            ComponentMask.CopyTo(bytes, 0);
-            tree.SetBytes("mask", bytes);
-        }
-        catch (System.Exception)
-        {
-            Api.Logger.Chat("Failed to safe");
+            component.ToTreeAttributes(tree);
         }
     }
 
-    public override void CreateBehaviors(Block block, IWorldAccessor worldForResolve)
+    public T AddComponent<T>(T component = null) where T : BEComponent, new()
     {
-        Api.Logger.Chat(ComponentMask.HasAnySet().ToString());
-        base.CreateBehaviors(block, worldForResolve);
-
-        if (ComponentMask[0]) AddBehavior<BEBehaviorSteamContainer>(worldForResolve);
-        if (ComponentMask[1]) AddBehavior<BEBehaviorSteamGenerator>(worldForResolve);
-        if (ComponentMask[2]) AddBehavior<BEBehaviorSteamConsumer>(worldForResolve);
-        if (ComponentMask[3]) AddBehavior<BEBehaviorHeatGenerator>(worldForResolve);
+        component ??= new T();
+        component.blockEntity = this;
+        components.Add(typeof(T), component);
+        return component;
     }
 
-    /// <summary>
-    /// Adds BEBehavior to the behavior lists
-    /// </summary>
-    /// <remarks>
-    /// Updates ComponentMask and calls MarkDirty
-    /// </remarks>
-    public T AddBehavior<T>(IWorldAccessor world) where T : BlockEntityBehavior, IRegister
+    public void TryAddComponentFromTreeAttributes<T>(ITreeAttribute tree, IWorldAccessor worldAccessForResolve) where T : BEComponent, new()
     {
-        T behavior = world.ClassRegistry.CreateBlockEntityBehavior(this, T.Name) as T;
-        Behaviors.Add(behavior);
-        ComponentMask.Set(TypeToIndex<T>(), true);
-        MarkDirty();
-        return behavior;
+        T component = new T();
+        if (component.HasTreeAttributes(tree, worldAccessForResolve))
+        {
+            AddComponent<T>(component);
+        }
     }
 
-    /// <summary>
-    /// Converts BEBehavior to corresponding index in BitArray
-    /// </summary>
-    /// <exception cref="ArgumentException">When BEBehavior is not supported</exception>
-    private int TypeToIndex<T>() where T : BlockEntityBehavior
+    public bool HasComponent<T>() where T : BEComponent
     {
-        if (typeof(T) == typeof(BEBehaviorSteamContainer)) return 0;
-        if (typeof(T) == typeof(BEBehaviorSteamGenerator)) return 1;
-        if (typeof(T) == typeof(BEBehaviorSteamConsumer)) return 2;
-        if (typeof(T) == typeof(BEBehaviorHeatGenerator)) return 3;
-        throw new System.ArgumentException(typeof(T).ToString() + " is not supported.");
+        return components.ContainsKey(typeof(T));
+    }
+
+    public T GetComponent<T>() where T : BEComponent
+    {
+        return components.TryGetValue(typeof(T)) as T;
     }
 }

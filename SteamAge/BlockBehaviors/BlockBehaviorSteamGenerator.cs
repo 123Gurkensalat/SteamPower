@@ -6,6 +6,7 @@ using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
+using Vintagestory.API.Server;
 
 using EnumLiquidDirection = Vintagestory.GameContent.BlockLiquidContainerBase.EnumLiquidDirection;
 
@@ -28,12 +29,17 @@ public class BlockBehaviorSteamGenerator : BlockBehavior, IRegister
 
     public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel, ref EnumHandling handling)
     {
-        var blockEntity = BlockSteamSystem.Find(world, blockSel.Position);
+        if (world.Api is ICoreServerAPI sapi)
+        {
+            sapi.Logger.Chat("block interacted on server");
+        }
+
+        var blockEntity = BlockSteamSystem.Find(world, blockSel.Position, e => e.HasComponent<SteamContainer>() && e.HasComponent<SteamGenerator>());
         if (!HandleLiquidTransfer(world, byPlayer, blockSel, blockEntity))
         {
             HandleDialogGui(world, blockSel, blockEntity);
-            handling = EnumHandling.Handled;
         }
+        handling = EnumHandling.Handled;
         return true;
     }
 

@@ -23,7 +23,6 @@ public class SteamGenerator : BEComponent
     {
         tree.SetFloat("water", Water);
         tree.SetFloat("capacity", Capacity);
-        blockEntity.Api.Logger.Chat("saving...");
     }
 }
 

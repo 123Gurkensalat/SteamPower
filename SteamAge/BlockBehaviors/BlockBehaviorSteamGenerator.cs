@@ -29,11 +29,6 @@ public class BlockBehaviorSteamGenerator : BlockBehavior, IRegister
 
     public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel, ref EnumHandling handling)
     {
-        if (world.Api is ICoreServerAPI sapi)
-        {
-            sapi.Logger.Chat("block interacted on server");
-        }
-
         var blockEntity = BlockSteamSystem.Find(world, blockSel.Position, e => e.HasComponent<SteamContainer>() && e.HasComponent<SteamGenerator>());
         if (!HandleLiquidTransfer(world, byPlayer, blockSel, blockEntity))
         {

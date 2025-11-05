@@ -37,7 +37,6 @@ public class BESteamSystem : BlockEntity, IRegister
 
     public override void ToTreeAttributes(ITreeAttribute tree)
     {
-        Api?.Logger.Chat(GetComponent<SteamGenerator>().Water.ToString());
         base.ToTreeAttributes(tree);
         foreach (var (_, component) in components)
         {

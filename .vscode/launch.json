@@ -1,65 +1,64 @@
 {
   "version": "0.2.0",
   "configurations": [
-        {
-            "name": "Launch Client (Debug)",
-            "type": "coreclr",
-            "request": "launch",
-            "program": "${env:VINTAGE_STORY}/Vintagestory.exe",
-            "linux": {
-                "program": "${env:VINTAGE_STORY}/Vintagestory"
-            },
-            "osx": {
-                "program": "${env:VINTAGE_STORY}/Vintagestory"
-            },
-            "preLaunchTask": "build",
-            "args": [
-                // "--playStyle" , "preset-surviveandbuild",
-                "--openWorld" , "PAIN",
-                "--tracelog",
-                "--addModPath",
-                "${workspaceFolder}/SteamPower/bin/Debug/Mods",
-                "--addOrigin",
-                "${workspaceFolder}/SteamPower/assets"
-            ],
-            "console": "internalConsole",
-            "stopAtEntry": false
-        },
-        {
-            "name": "Launch Server",
-            "type": "coreclr",
-            "request": "launch",
-            "program": "${env:VINTAGE_STORY}/VintagestoryServer.exe",
-            "linux": {
-                "program": "${env:VINTAGE_STORY}/VintagestoryServer"
-            },
-            "osx": {
-                "program": "${env:VINTAGE_STORY}/VintagestoryServer"
-            },
-            "preLaunchTask": "build",
-            "args": [
-                "--tracelog",
-                "--addModPath",
-                "${workspaceFolder}/SteamPower/bin/Debug/Mods",
-                 "--addOrigin",
-                 "${workspaceFolder}/SteamPower/assets"
-            ],
-            "console": "internalConsole",
-            "stopAtEntry": false
-        },
-        {
-            "name": "CakeBuild",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build (Cake)",
-            "program": "${workspaceFolder}/CakeBuild/bin/Debug/net7.0/CakeBuild.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/CakeBuild",
-            "stopAtEntry": false,
-            "console": "internalConsole"
-        }
-
-,
+    {
+      "name": "Launch Client (Debug)",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${env:VINTAGE_STORY}/Vintagestory.exe",
+      "linux": {
+        "program": "${env:VINTAGE_STORY}/Vintagestory"
+      },
+      "osx": {
+        "program": "${env:VINTAGE_STORY}/Vintagestory"
+      },
+      "preLaunchTask": "build",
+      "args": [
+        // "--playStyle" , "preset-surviveandbuild",
+        "--openWorld",
+        "PAIN",
+        "--tracelog",
+        "--addModPath",
+        "${workspaceFolder}/SteamAge/bin/Debug/Mods",
+        "--addOrigin",
+        "${workspaceFolder}/SteamAge/assets"
+      ],
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Launch Server",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${env:VINTAGE_STORY}/VintagestoryServer.exe",
+      "linux": {
+        "program": "${env:VINTAGE_STORY}/VintagestoryServer"
+      },
+      "osx": {
+        "program": "${env:VINTAGE_STORY}/VintagestoryServer"
+      },
+      "preLaunchTask": "build",
+      "args": [
+        "--tracelog",
+        "--addModPath",
+        "${workspaceFolder}/SteamAge/bin/Debug/Mods",
+        "--addOrigin",
+        "${workspaceFolder}/SteamAge/assets"
+      ],
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
+      "name": "CakeBuild",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build (Cake)",
+      "program": "${workspaceFolder}/CakeBuild/bin/Debug/net7.0/CakeBuild.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/CakeBuild",
+      "stopAtEntry": false,
+      "console": "internalConsole"
+    },
     {
       "name": "Launch Client (Debug) - old",
       "type": "coreclr",
@@ -110,8 +109,6 @@
       "cwd": "${workspaceFolder}/CakeBuild",
       "stopAtEntry": false,
       "console": "internalConsole"
-    },
-
+    }
   ]
 }
-

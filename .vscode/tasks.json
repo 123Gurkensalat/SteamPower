@@ -9,7 +9,7 @@
         "build",
         "-c",
         "Debug",
-        "${workspaceFolder}/SteamPower/SteamPower.csproj"
+        "${workspaceFolder}/SteamAge/SteamAge.csproj"
       ],
       "problemMatcher": "$msCompile"
     },

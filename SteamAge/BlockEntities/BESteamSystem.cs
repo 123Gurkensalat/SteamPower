@@ -7,11 +7,12 @@ using System.Collections.Generic;
 namespace SteamAge.BlockEntities;
 
 /// <summary>
-/// This class holds all BEBehaviors in the current system
+/// This class holds all BEComponents in the current system
 /// </summary>
 public class BESteamSystem : BlockEntity, IRegister
 {
     public static string Name => "steamsystem";
+
     Dictionary<Type, BEComponent> components = new();
 
     public override void Initialize(ICoreAPI api)
@@ -44,6 +45,9 @@ public class BESteamSystem : BlockEntity, IRegister
         }
     }
 
+    /// <summary>
+    /// Adds the given component. If component == null, the default constructor gets called
+    /// </summary>
     public T AddComponent<T>(T component = null) where T : BEComponent, new()
     {
         component ??= new T();
@@ -52,6 +56,9 @@ public class BESteamSystem : BlockEntity, IRegister
         return component;
     }
 
+    /// <summary>
+    /// Adds given component when the BlockEntity has the needed attributes
+    /// </summary>
     public void TryAddComponentFromTreeAttributes<T>(ITreeAttribute tree, IWorldAccessor worldAccessForResolve) where T : BEComponent, new()
     {
         T component = new T();
@@ -61,11 +68,17 @@ public class BESteamSystem : BlockEntity, IRegister
         }
     }
 
+    /// <summary>
+    /// Returns if this BlockEntity has given component
+    /// </summary>
     public bool HasComponent<T>() where T : BEComponent
     {
         return components.ContainsKey(typeof(T));
     }
 
+    /// <summary>
+    /// Returns the given component. If not found will return null;
+    /// </summary>
     public T GetComponent<T>() where T : BEComponent
     {
         return components.TryGetValue(typeof(T)) as T;

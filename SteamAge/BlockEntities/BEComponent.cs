@@ -3,6 +3,9 @@ using Vintagestory.API.Datastructures;
 
 namespace SteamAge.BlockEntities;
 
+/// <summary>
+/// Base class that allows inherited classes to be added to the BESteamSystem
+/// </summary>
 public abstract class BEComponent
 {
     public BESteamSystem blockEntity;

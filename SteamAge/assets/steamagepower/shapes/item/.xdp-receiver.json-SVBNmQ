@@ -1,0 +1,39 @@
+{
+	"editor": {},
+	"textureWidth": 192,
+	"textureHeight": 192,
+	"textureSizes": {
+		"brass1.png": [32, 32],
+		"blackbronze1.png": [32, 32]
+	},
+	"textures": {
+		"brass1.png": "",
+		"blackbronze1.png": ""
+	},
+	"elements": [
+		{
+			"name": "cube",
+			"from": [0, 0, 0],
+			"to": [0, 0, 0],
+			"rotationOrigin": [0, 0, 0],
+			"children": [
+				{
+					"name": "cube",
+					"from": [0, 0, 0],
+					"to": [16, 16, 16],
+					"rotationOrigin": [0, 0, 0],
+					"uv": [0, 0],
+					"faces": {
+						"north": {"texture": "#blackbronze1.png", "uv": [0, 0, 16, 16], "autoUv": false, "snapUv": false},
+						"east": {"texture": "#brass1.png", "uv": [0, 16, 16, 32], "autoUv": false, "snapUv": false},
+						"south": {"texture": "#brass1.png", "uv": [16, 0, 32, 16], "autoUv": false, "snapUv": false},
+						"west": {"texture": "#brass1.png", "uv": [16, 16, 32, 32], "autoUv": false, "snapUv": false},
+						"up": {"texture": "#brass1.png", "uv": [16, 48, 0, 32], "autoUv": false, "snapUv": false},
+						"down": {"texture": "#brass1.png", "uv": [48, 0, 32, 16], "autoUv": false, "snapUv": false}
+					}
+				}
+			]
+		}
+	],
+	"animations": []
+}

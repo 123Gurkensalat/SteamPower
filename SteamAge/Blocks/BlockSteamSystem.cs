@@ -1,6 +1,8 @@
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 
+using System.Collections.Generic;
+
 using SteamAge.BlockEntities;
 
 namespace SteamAge.Blocks;
@@ -47,7 +49,51 @@ public class BlockSteamSystem : Block, IRegister
     /// <returns>The first BlockEntity that suffices the matcher</returns>
     public static BESteamSystem Find(IWorldAccessor world, BlockPos pos, Func<BESteamSystem, bool> matcher)
     {
-        return world.BlockAccessor.GetBlockEntity<BESteamSystem>(pos); // <- not final just for testing
+        var queue = new Queue<BlockPos>();
+        var visited = new HashSet<BlockPos>();
+
+        queue.Enqueue(pos);
+
+        while (queue.Count > 0)
+        {
+            var currentPos = queue.Dequeue();
+            if (visited.Contains(currentPos)) continue;
+
+            // check if block is part of a steam system
+            if (world.BlockAccessor.GetBlock(pos) is not BlockSteamSystem)
+            {
+                visited.Add(pos);
+                continue;
+            }
+
+            // try to get the matching blockentity
+            var blockEntity = world.BlockAccessor.GetBlockEntity<BESteamSystem>(pos);
+            if (blockEntity != null && matcher(blockEntity))
+            {
+                return blockEntity;
+            }
+
+            foreach (var dir in GetNeighbours(pos))
+            {
+                if (!visited.Contains(dir))
+                {
+                    queue.Enqueue(dir);
+                }
+            }
+        }
+
+        world.Api.Logger.Error("Could not find matching BESteamSystem.");
+        return null;
+    }
+
+    private static IEnumerable<BlockPos> GetNeighbours(BlockPos pos)
+    {
+        yield return pos.UpCopy();
+        yield return pos.DownCopy();
+        yield return pos.NorthCopy();
+        yield return pos.EastCopy();
+        yield return pos.SouthCopy();
+        yield return pos.WestCopy();
     }
 
     /// <summary>

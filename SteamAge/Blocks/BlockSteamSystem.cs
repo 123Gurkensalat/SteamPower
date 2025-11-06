@@ -58,13 +58,10 @@ public class BlockSteamSystem : Block, IRegister
         {
             var currentPos = queue.Dequeue();
             if (visited.Contains(currentPos)) continue;
+            visited.Add(pos);
 
             // check if block is part of a steam system
-            if (world.BlockAccessor.GetBlock(pos) is not BlockSteamSystem)
-            {
-                visited.Add(pos);
-                continue;
-            }
+            if (world.BlockAccessor.GetBlock(pos) is not BlockSteamSystem) continue;
 
             // try to get the matching blockentity
             var blockEntity = world.BlockAccessor.GetBlockEntity<BESteamSystem>(pos);

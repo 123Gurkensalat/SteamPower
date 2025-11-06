@@ -1,0 +1,23 @@
+{
+  "code": "receiver",
+  "creativeinventory": {
+    "general": [
+      "*"
+    ]
+  },
+  "textures": {
+    "brass1.png": {
+      "base": "game:item/resource/plate/brass"
+    },
+    "blackbronze1.png": {
+      "base": "game:item/resource/plate/blackbronze"
+    }
+  },
+  "blockmaterial": "Stone",
+  "drawtype": "json",
+  "resistance": 0.5,
+  "sounds": {
+    "place": "game:block/stickplace",
+    "walk": "game:walk/wood"
+  }
+}
